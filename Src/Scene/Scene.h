@@ -1,0 +1,99 @@
+
+#ifndef __SCENE_H__
+#define __SCENE_H__
+
+class SCENE_BASE
+{
+protected:
+
+	int m_
+
+public:
+
+	//初期化
+	virtual void Init();
+	//データロード
+	virtual void Load();
+	//通常処理
+	virtual void Step();
+	//描画処理
+	virtual void Draw();
+	//消去処理
+	virtual void Fin();
+
+};
+
+
+enum SCENE_ID
+{
+	//タイトル関連
+	SCENE_ID_INIT_TITLE = 100,
+	SCENE_ID_LOOP_TITLE,
+	SCENE_ID_FIN_TITLE,
+
+	//オプション関連
+	SCENE_ID_INIT_OPTION = 200,
+	SCENE_ID_LOOP_OPTION,
+	SCENE_ID_FIN_OPTION,
+
+	//ゲーム説明関連
+	SCENE_ID_INIT_GAME_EXPLAIN = 300,
+	SCENE_ID_LOOP_GAME_EXPLAIN,
+	SCENE_ID_FIN_GAME_EXPLAIN,
+
+	//ステージセレクト関連
+	SCENE_ID_INIT_STAGE_SELECT = 400,
+	SCENE_ID_LOOP_STAGE_SELECT,
+	SCENE_ID_FIN_STAGE_SELECT,
+
+	//メインメニュー関連
+	SCENE_ID_INIT_MEIN_MENU = 500,
+	SCENE_ID_LOOP_MEIN_MENU,
+	SCENE_ID_FIN_MEIN_MENU,
+
+	//メニューシーン関連
+	SCENE_ID_INIT_MENU = 600,
+	SCENE_ID_LOOP_MENU,
+	SCENE_ID_FIN_MENU,
+
+	//インベントリ関連
+	SCENE_ID_INIT_INVENTORY = 700,
+	SCENE_ID_LOOP_INVENTORY,
+	SCENE_ID_FIN_INVENTORY,
+
+	//アイテム合成関連
+	SCENE_ID_INIT_ITEM_CONPOS = 800,
+	SCENE_ID_LOOP_ITEM_CONPOS,
+	SCENE_ID_FIN_ITEM_CONPOS,
+
+	//ショップ関連
+	SCENE_ID_INIT_SHOP = 900,
+	SCENE_ID_LOOP_SHOP,
+	SCENE_ID_FIN_SHOP,
+
+	////図鑑関連
+	//SCENE_ID_INIT_DICTIONARY = 1000,
+	//SCENE_ID_LOOP_DICTIONARY,
+	//SCENE_ID_FIN_DICTIONARY,
+
+	//プレイ関連
+	SCENE_ID_INIT_PLAY = 1100,
+	SCENE_ID_LOOP_PLAY,
+	SCENE_ID_FIN_PLAY,
+
+	//クリア関連	
+	SCENE_ID_INIT_CLEAR = 1200,
+	SCENE_ID_LOOP_CLEAR,
+	SCENE_ID_FIN_CLEAR,
+
+	//ゲームオーバー関連
+	SCENE_ID_INIT_GAMEOVER = 1300,
+	SCENE_ID_LOOP_GAMEOVER,
+	SCENE_ID_FIN_GAMEOVER,
+};
+
+//現在のシーンID
+extern int g_CurrentSceneID;
+
+#endif
+
