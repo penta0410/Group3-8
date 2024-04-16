@@ -1,9 +1,9 @@
 
-#ifndef __SCENE_PLAY_H__
-#define __SCENE_PLAY_H__
+#pragma once
+#include "../Scene.h"
 
-
-class PLAY
+//プレイシーンクラス
+class PLAY : public SCENE_BASE
 {
 private:
 	
@@ -15,4 +15,3 @@ public:
 
 };
 
-#endif

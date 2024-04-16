@@ -1,10 +1,8 @@
+#pragma once
+#include "../Scene.h"
 
-#ifndef __SCENE_TITLE_H__
-#define __SCENE_TITLE_H__
-
-
-
-class TITLE
+//タイトルクラス
+class TITLE : public SCENE_BASE 
 {
 private:
 
@@ -14,4 +12,3 @@ public:
 
 };
 
-#endif
