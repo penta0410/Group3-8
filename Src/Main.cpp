@@ -27,7 +27,7 @@ RESULT result;
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
 	//ウィンドウの状態を設定する
-	ChangeWindowMode(false);
+	ChangeWindowMode(true);
 	//ウィンドウサイズを変更
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
 

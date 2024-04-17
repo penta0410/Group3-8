@@ -35,10 +35,5 @@ void CalcFPS()
 void DrawFPS()
 {
 	unsigned int color = GetColor(255, 30, 30);
-
-	if (m_title.m_start_animetion_flag == 0)
-	{
-		DrawFormatString(1190, 700, color, "FPS[%.2f]", frameRateInfo.fps);
-	}
-
+	DrawFormatString(1190, 700, color, "FPS[%.2f]", frameRateInfo.fps);
 }
