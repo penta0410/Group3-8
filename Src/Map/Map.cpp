@@ -33,7 +33,7 @@ void Map::Draw(int mapmove) {
 			if (isReadFile) {
 				int mapchipType = m_FileReadMapData[y][x];
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
-					DrawGraph(x * MAP_SIZE - mapmove - 540, y * MAP_SIZE, imgHundle[mapchipType], true);
+					DrawGraph(x * MAP_SIZE - mapmove, y * MAP_SIZE, imgHundle[mapchipType], true);
 				}
 			}
 			else {
