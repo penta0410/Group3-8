@@ -25,7 +25,7 @@ void Player::Init()
 	m_move_y = 0.0f;		//Y移動量
 
 	//画像ハンドル
-	memset(m_ImageHandle, 0, sizeof(m_ImageHandle));
+	memset(m_ImageHandle, -1, sizeof(m_ImageHandle));
 
 	//アニメーション番号
 	m_Animation_Num = 0;

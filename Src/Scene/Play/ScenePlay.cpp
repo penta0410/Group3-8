@@ -12,6 +12,8 @@
 //初期化
 void PLAY::Init()
 {
+	player.Init();				//プレイヤーの初期化処理
+	player.DefaultValue();		//プレイヤーの初期値設定
 
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
@@ -20,12 +22,13 @@ void PLAY::Init()
 //ロード
 void PLAY::Load()
 {
-
+	player.Load();				//プレイヤーの読み込み
 }
 
 //通常処理
 void PLAY::Step()
-{
+{	
+	player.Step();				//プレイヤーの通常処理
 
 	//リザルトシーンへの遷移
 	//Enterキー押されたなら
@@ -42,6 +45,7 @@ void PLAY::Step()
 //描画処理
 void PLAY::Draw()
 {
+	player.Draw();				//プレイヤーの描画処理
 
 	//デバッグ
 	SetFontSize(30);

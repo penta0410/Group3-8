@@ -1,12 +1,13 @@
 #pragma once
 #include "../Scene.h"
+#include "../../Player/Player.h"
 
 //プレイシーンクラス
 class PLAY : public SCENE_BASE
 {
 private:
-	
-
+	//クラス宣言
+	Player player;			//プレイヤークラス
 	
 public:
 
