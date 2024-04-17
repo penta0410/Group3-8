@@ -7,6 +7,16 @@
 #include "../../Collision/Collision.h"
 #include "../../Input/Input.h"
 
+//プレイシーン画像枚数
+const int PLAY_IMAGE_PATH_NUM = 1;
+
+//プレイシーンパス
+const char* PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
+{
+	"Data/Play/ BackGround.png",		//背景
+
+};
+
 //プレイシーンクラス
 class PLAY : public SCENE_BASE
 {
@@ -14,6 +24,9 @@ private:
 	//クラス宣言
 	Player player;			//プレイヤークラス
 	
+	//画像ハンドル
+	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
+
 public:
 
 	//初期化
