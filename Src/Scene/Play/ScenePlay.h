@@ -1,4 +1,3 @@
-
 #pragma once
 #include "../Scene.h"
 
@@ -11,7 +10,16 @@ private:
 	
 public:
 
-	
+	//‰Šú‰»
+	void Init() override;
+	//ƒ[ƒh
+	void Load() override;
+	//’Êíˆ—
+	void Step()	override;
+	//•`‰æˆ—
+	void Draw() override;
+	//Œãˆ—
+	void Fin() override;
 
 };
 

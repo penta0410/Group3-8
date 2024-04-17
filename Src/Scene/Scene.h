@@ -5,9 +5,11 @@ class SCENE_BASE
 {
 protected:
 
-	//画像ハンドル
-	int m_ImageHanndle;
-
+	//シーンフラグ
+	int m_SceneFlag;
+	//シーンフレーム
+	int m_SceneFlame;
+	
 public:
 
 	//初期化
@@ -18,7 +20,7 @@ public:
 	void virtual Step();
 	//描画処理
 	void virtual Draw();
-	//消去処理
+	//後処理
 	void virtual Fin();
 
 };
