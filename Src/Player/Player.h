@@ -1,5 +1,12 @@
 #pragma once
 
+#include "DxLib.h"
+#include "../Input/Input.h"
+#include "../Screen/Screen.h"
+#include "../Scene/Scene.h"
+#include "../Collision/Collision.h"
+#include "../Enemy/Enemy.h"
+
 const char PLAYER_IMAGE_PARH[] = { "Data/Player/pipo-simpleenemy01g.png" };			//画像パス
 
 const int PLAYER_WIDTH = 32;														//横サイズ
@@ -8,10 +15,15 @@ const int PLAYER_W_R = 16;															//横の半径
 const int PLAYER_H_R = 16;															//縦の半径
 const int PLAYER_IMAGE_NUM = 12;													//画像の配列の数
 
+const int PLAYER_FREAM_CNT = 60;															//1秒カウント
+const int PLAYER_SPEED_UP_TIME = 10;
+
 
 class Player
 {
 private:
+	//クラス宣言
+	Screen screen;
 
 	//プレイヤーの座標
 	float m_posX = 0.0f;
@@ -66,6 +78,11 @@ private:
 	int m_Mouse_x = 0;	//ｘ座標
 	int m_Mouse_y = 0;	//y座標
 
+	//フレームカウント
+	int PlayerFreamCnt;
+
+	//プレイヤー速さをあげるまでの時間
+	int PlayerUpSeedTime;
 
 public:
 	//初期化
@@ -85,6 +102,14 @@ public:
 
 	//終了処理
 	void Fin();
+
+	//移動処理
+	void Move();
+
+	//座標取得
+	float GetPosX() { return m_posX; }		//X座標
+	float GetPosY() { return m_posY; }		//Y座標
+
 };
 
 

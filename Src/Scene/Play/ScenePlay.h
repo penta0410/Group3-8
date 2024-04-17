@@ -1,6 +1,11 @@
 #pragma once
 #include "../Scene.h"
 #include "../../Player/Player.h"
+#include <math.h>
+#include "DxLib.h"
+#include "ScenePlay.h"
+#include "../../Collision/Collision.h"
+#include "../../Input/Input.h"
 
 //プレイシーンクラス
 class PLAY : public SCENE_BASE

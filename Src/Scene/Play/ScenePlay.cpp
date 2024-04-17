@@ -1,9 +1,6 @@
+#pragma once
 
-#include <math.h>
-#include "DxLib.h"
 #include "ScenePlay.h"
-#include "../../Collision/Collision.h"
-#include "../../Input/Input.h"
 
 //=============================
 // プレイシーン

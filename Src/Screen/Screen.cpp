@@ -1,7 +1,7 @@
+#pragma once
 
 #include <DxLib.h>
 #include "Screen.h"
-#include "../Player/Player.h"
 #include "../Common.h"
 #include "../Scene/Play/ScenePlay.h"
 
