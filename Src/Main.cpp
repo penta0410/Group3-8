@@ -3,6 +3,7 @@
 #include "Scene/Scene.h"
 #include "../Src/Scene/Title/SceneTitle.h"
 #include "../Src/Scene/Play/ScenePlay.h"
+#include "../Src/Scene/Result/SceneResult.h"
 #include "Common.h"
 #include "FPS/fps.h"
 #include "Scene/Meinmenu/MeinmenuScene.h"
