@@ -14,7 +14,11 @@ const int PLAYER_HIGHT = 32;														//縦サイズ
 const int PLAYER_W_R = 16;															//横の半径
 const int PLAYER_H_R = 16;															//縦の半径
 const int PLAYER_IMAGE_NUM = 12;													//画像の配列の数
-const float PLAYER_SPEED = 2.5;														//プレイヤーのスピード
+const float PLAYER_SPEED = 2.5;														//プレイヤーのXスピード
+const float PLAYER_Y_SPEED = 15.0f;													//プレイヤーのYスピード
+const int PLAYER_IMG_TOTAL_NUM = 12;												//プレイヤーの画像総数
+const int PLAYER_IMG_X_NUM = 3;														//プレイヤーの横の枚数
+const int PLAYER_IMG_Y_NUM = 4;														//プレイヤーの縦の枚数
 
 const int PLAYER_FREAM_CNT = 60;													//1秒カウント
 const int PLAYER_SPEED_UP_TIME = 10;												//時間カウントするやつ
@@ -47,8 +51,9 @@ private:
 	//画像ハンドル
 	int m_ImageHandle[PLAYER_IMAGE_NUM];
 
-	//アニメーション番号
-	int m_Animation_Num;
+	//アニメーション関連
+	int m_Animation_Num;					//アニメーション番号
+	int m_AnimationFreamCnt;				//アニメーション用フレームカウント
 
 	//プレイヤー画像反転フラグ
 	int m_PlayerVisualDirection = 0;
@@ -68,15 +73,12 @@ private:
 	//描画フラグ
 	int m_drawflag = 0;
 
-	//攻撃アニメーションフレーム
-	int m_attack_frame = 0;
-
 	//マウス座標
 	int m_Mouse_x = 0;	//ｘ座標
 	int m_Mouse_y = 0;	//y座標
 
 	//フレームカウント
-	int PlayerFreamCnt;
+	int SpeedFreamCnt;
 
 	//プレイヤー速さをあげるまでの時間
 	int PlayerUpSeedTime;
@@ -106,6 +108,8 @@ public:
 	//操作処理
 	void Control();
 
+	void Animation();
+	
 	//重力を与える
 	void Gravity();
 
@@ -113,7 +117,7 @@ public:
 	float GetPosX() { return m_posX; }		//X座標
 	float GetPosY() { return m_posY; }		//Y座標
 
-	float GetMovePosX() { return m_move_x; }
+
 
 };
 
