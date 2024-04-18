@@ -8,13 +8,13 @@ Map::~Map() {}
 
 void Map::Init() {
 	// 画像の読み込み
-	imgHundle[MAPCHIP_BLOCK] = LoadGraph("Data/PlayImage/図1.png");		//土ブロック
-	imgHundle[MAPCHIP_KUSA] = LoadGraph("Data/PlayImage/図2.png");		//草ブロック
-	imgHundle[MAPCHIP_HATENA] = LoadGraph("Data/PlayImage/図4.png");	//ハテナブロック
-	imgHundle[MAPCHIP_HATENA_2] = LoadGraph("Data/PlayImage/図5.png");		//はてなブロック（使用済み)
-	imgHundle[MAPCHIP_KAGI] = LoadGraph("Data/PlayImage/図11.png");		//鍵
-	imgHundle[MAPCHIP_KAGIBLOCK] = LoadGraph("Data/PlayImage/図10.png");	//鍵ブロック
-	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/PlayImage/図51.png");	//木箱
+	imgHundle[MAPCHIP_BLOCK] = LoadGraph("Data/Play/図1.png");		//土ブロック
+	imgHundle[MAPCHIP_KUSA] = LoadGraph("Data/Play/図2.png");		//草ブロック
+	imgHundle[MAPCHIP_HATENA] = LoadGraph("Data/Play/図4.png");	//ハテナブロック
+	imgHundle[MAPCHIP_HATENA_2] = LoadGraph("Data/Play/図5.png");		//はてなブロック（使用済み)
+	imgHundle[MAPCHIP_KAGI] = LoadGraph("Data/Play/図11.png");		//鍵
+	imgHundle[MAPCHIP_KAGIBLOCK] = LoadGraph("Data/Play/図10.png");	//鍵ブロック
+	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/Play/図51.png");	//木箱
 
 
 	ReadFile();
@@ -58,7 +58,7 @@ void Map::Koin()
 // ファイルからの読み込み
 void Map::ReadFile() {
 	FILE* fp;
-	fopen_s(&fp, "Data/PlayImage/map.csv", "r");
+	fopen_s(&fp, "Data/Play/map.csv", "r");
 
 	int mapIndexX = 0;
 	int mapIndexY = 0;

@@ -1,12 +1,6 @@
 #pragma once
 #include "../Screen/Screen.h"
 
-//マップパス
-#define MAP_IMAGE_PATH	"Data/PlayImage/画像5.png"
-
-//プレイ背景パス
-#define PLAY_IMAGE_PATH	"Data/PlayImage/画像6.png"
-
 // 各マップのデータ数
 const int MAP_DATA_Y = 20;
 const int MAP_DATA_X = 200;

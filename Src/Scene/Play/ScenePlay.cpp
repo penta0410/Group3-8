@@ -12,6 +12,7 @@ void PLAY::Init()
 {
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
+	m_map.Init();				//マップ初期化
 
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH/2;
@@ -74,7 +75,7 @@ void PLAY::Draw()
 
 	player.Draw();				//プレイヤーの描画処理
 
-	
+	m_map.Draw(m_screen.GetScreenX());
 
 	//デバッグ
 	SetFontSize(30);
