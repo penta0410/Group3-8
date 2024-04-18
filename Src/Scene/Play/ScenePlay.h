@@ -6,6 +6,7 @@
 #include "ScenePlay.h"
 #include "../../Collision/Collision.h"
 #include "../../Input/Input.h"
+#include "../../Screen/Screen.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 1;
@@ -23,7 +24,8 @@ class PLAY : public SCENE_BASE
 private:
 	//クラス宣言
 	Player player;			//プレイヤークラス
-	
+	Screen m_screen;		//スクリーンクラス
+
 	//画像ハンドル
 	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
 
@@ -39,6 +41,7 @@ public:
 	void Draw() override;
 	//後処理
 	void Fin() override;
+
 
 };
 

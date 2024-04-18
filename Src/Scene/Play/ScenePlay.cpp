@@ -12,6 +12,7 @@ void PLAY::Init()
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
 
+	
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
 }
@@ -19,6 +20,7 @@ void PLAY::Init()
 //ロード
 void PLAY::Load()
 {
+	m_ImageHandle[0] = LoadGraph(PLAY_PATH[0]);
 	player.Load();				//プレイヤーの読み込み
 }
 
