@@ -14,9 +14,8 @@ void Map::Init() {
 	imgHundle[MAPCHIP_HATENA_2] = LoadGraph("Data/PlayImage/図5.png");		//はてなブロック（使用済み)
 	imgHundle[MAPCHIP_KAGI] = LoadGraph("Data/PlayImage/図11.png");		//鍵
 	imgHundle[MAPCHIP_KAGIBLOCK] = LoadGraph("Data/PlayImage/図10.png");	//鍵ブロック
-	imgHundle[MAPCHIP_KOIN] = LoadGraph("Data/PlayImage/図13.png");	//コイン
 	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/PlayImage/図51.png");	//木箱
-	imgHundle[MAPCHIP_KUSAKO] = LoadGraph("Data/PlayImage/図3.png");	//草弧
+
 
 	ReadFile();
 	isReadFile = true;
@@ -35,10 +34,6 @@ void Map::Draw(int mapmove) {
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
 					DrawGraph(x * MAP_SIZE - mapmove, y * MAP_SIZE, imgHundle[mapchipType], true);
 				}
-			}
-			else {
-				DrawFormatString(0, 0, GetColor(255, 255, 255),
-					"マップチップが描画されませんでした。", true);
 			}
 		}
 	}
