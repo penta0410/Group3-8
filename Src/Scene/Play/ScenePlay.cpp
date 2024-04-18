@@ -13,7 +13,12 @@ void PLAY::Init()
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
 
-	
+	//背景座標
+	m_BG_x[0] = WINDOW_WIDTH/2;
+	m_BG_y[0] = WINDOW_HEIGHT/2;
+	m_BG_x[1] = WINDOW_WIDTH + WINDOW_WIDTH / 2;
+	m_BG_y[1] = WINDOW_HEIGHT + WINDOW_HEIGHT / 2;
+
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
 }
@@ -46,9 +51,13 @@ void PLAY::Step()
 //描画処理
 void PLAY::Draw()
 {
+	//背景描画
+	DrawRotaGraph(m_BG_x[0], m_BG_y[0], 1.0f, 0.0f, m_ImageHandle[0], true);
+
 	player.Draw();				//プレイヤーの描画処理
 
-	/*DrawRotaGraph( )*/
+	
+
 	//デバッグ
 	SetFontSize(30);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "プレイシーンです。", true);
