@@ -7,7 +7,7 @@
 #include "../Collision/Collision.h"
 #include "../Enemy/Enemy.h"
 
-const char PLAYER_IMAGE_PARH[] = { "Data/Player/pipo-simpleenemy01g.png" };			//画像パス
+const char PLAYER_IMAGE_PATH[] = { "Data/Player/pipo-simpleenemy01g.png" };			//画像パス
 
 const int PLAYER_WIDTH = 32;														//横サイズ
 const int PLAYER_HIGHT = 32;														//縦サイズ

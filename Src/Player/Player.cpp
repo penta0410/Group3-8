@@ -39,7 +39,7 @@ void Player::Init()
 //“Ç‚İ‚İˆ—
 void Player::Load()
 {
-	LoadDivGraph(PLAYER_IMAGE_PARH, 12, 3, 4, PLAYER_WIDTH, PLAYER_HIGHT, m_ImageHandle);
+	LoadDivGraph(PLAYER_IMAGE_PATH, 12, 3, 4, PLAYER_WIDTH, PLAYER_HIGHT, m_ImageHandle);
 }
 
 //‰Šú’lİ’èˆ—

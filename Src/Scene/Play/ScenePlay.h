@@ -11,7 +11,7 @@
 const int PLAY_IMAGE_PATH_NUM = 1;
 
 //プレイシーンパス
-const char* PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
+const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 {
 	"Data/Play/ BackGround.png",		//背景
 
