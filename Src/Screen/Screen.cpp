@@ -3,7 +3,6 @@
 #include <DxLib.h>
 #include "Screen.h"
 #include "../Common.h"
-#include "../Scene/Play/ScenePlay.h"
 
 //スクリーンのワールド座標
 Screen::Screen()
@@ -26,7 +25,6 @@ void Screen::StepScreen(int x)
 	m_screenX = x - WINDOW_WIDTH / 2;
 
 }
-
 
 //スクリーンのＸ座標を取得
 float Screen::GetScreenX()
