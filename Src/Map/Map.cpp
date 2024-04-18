@@ -49,8 +49,7 @@ void Map::Draw(int mapmove) {
 
 					if (move <= -11100)
 					{
-						move = x * MAP_SIZE - mapmove + 11200 * increase;
-						increase += 1;
+						move = x * MAP_SIZE - mapmove + 11200 * 2;
 					}
 					
 				}
@@ -71,8 +70,8 @@ void Map::Draw(int mapmove) {
 
 					if (move_2 <= -11100)
 					{
-						move_2 = x * MAP_SIZE - mapmove + 11200 * increase;
-						increase += 1;
+						move_2 = x * MAP_SIZE - mapmove + 11200 * 2;
+						
 					}
 
 				}
