@@ -118,3 +118,19 @@ void Player::Move()
 	}
 
 }
+
+void Player::Control()
+{
+	if (IsKeyPush(KEY_INPUT_SPACE))
+	{
+		m_move_y -= 15.0;
+	}
+}
+
+void Player::Gravity()
+{
+	if (isGravity)
+	{
+		m_move_y += GRAVITY;
+	}
+}

@@ -14,9 +14,12 @@ const int PLAYER_HIGHT = 32;														//縦サイズ
 const int PLAYER_W_R = 16;															//横の半径
 const int PLAYER_H_R = 16;															//縦の半径
 const int PLAYER_IMAGE_NUM = 12;													//画像の配列の数
+const float PLAYER_SPEED = 2.5;														//プレイヤーのスピード
 
-const int PLAYER_FREAM_CNT = 60;															//1秒カウント
-const int PLAYER_SPEED_UP_TIME = 10;
+const int PLAYER_FREAM_CNT = 60;													//1秒カウント
+const int PLAYER_SPEED_UP_TIME = 10;												//時間カウントするやつ
+
+const float GRAVITY = 0.7f;															//重力
 
 
 class Player
@@ -65,12 +68,6 @@ private:
 	//描画フラグ
 	int m_drawflag = 0;
 
-	//攻撃フレーム
-	int m_attack = 0;
-
-	//攻撃フラグ
-	int m_attackFlag = 0;
-
 	//攻撃アニメーションフレーム
 	int m_attack_frame = 0;
 
@@ -106,9 +103,17 @@ public:
 	//移動処理
 	void Move();
 
+	//操作処理
+	void Control();
+
+	//重力を与える
+	void Gravity();
+
 	//座標取得
 	float GetPosX() { return m_posX; }		//X座標
 	float GetPosY() { return m_posY; }		//Y座標
+
+	float GetMovePosX() { return m_move_x; }
 
 };
 
