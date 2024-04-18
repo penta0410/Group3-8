@@ -9,13 +9,13 @@
 #include "../../Screen/Screen.h"
 
 //プレイシーン画像枚数
-const int PLAY_IMAGE_PATH_NUM = 1;
+const int PLAY_IMAGE_PATH_NUM = 2;
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 {
 	"Data/Play/BackGround.png",		//背景
-
+	"Data/Play/BackGround2.png",		//背景２
 };
 
 //プレイシーンクラス
@@ -31,7 +31,7 @@ private:
 
 	//背景座標
 	int m_BG_x[2];
-	int m_BG_y[2];
+	int m_BG_y;
 	
 
 public:
