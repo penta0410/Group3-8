@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ScenePlay.h"
+#include "../../Common.h"
 
 //=============================
 // プレイシーン
@@ -12,6 +13,7 @@ void PLAY::Init()
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
 
+	
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
 }
@@ -19,6 +21,7 @@ void PLAY::Init()
 //ロード
 void PLAY::Load()
 {
+	m_ImageHandle[0] = LoadGraph(PLAY_PATH[0]);			//プレイ背景
 	player.Load();				//プレイヤーの読み込み
 }
 
@@ -26,6 +29,7 @@ void PLAY::Load()
 void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
+	player.GetPosX();
 
 	//リザルトシーンへの遷移
 	//Enterキー押されたなら
@@ -44,6 +48,7 @@ void PLAY::Draw()
 {
 	player.Draw();				//プレイヤーの描画処理
 
+	/*DrawRotaGraph( )*/
 	//デバッグ
 	SetFontSize(30);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "プレイシーンです。", true);
