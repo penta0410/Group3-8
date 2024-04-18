@@ -33,16 +33,33 @@ private:
 	// 画像ハンドル
 	int imgHundle[MAPCHIP_MAX];
 
+	int move = 0;
+
+	int move_2 = 0;
+
+	int increase = 0;
+
 public:
 	Map();
 	~Map();
 
 	//ファイル読み込みフラグ
 	bool isReadFile;
+	bool isReadFile2;
 
 	//ファイルからのマップデータ
 	int m_FileReadMapData[MAP_DATA_Y][MAP_DATA_X] = { 0 };
+	int m_FileReadMapData2[MAP_DATA_Y][MAP_DATA_X] = { 0 };
 
+	//ファイル１読み込み終了フラグ
+	int ReadFileFlag_1 = 0;
+	//ファイル2読み込み終了フラグ
+	int ReadFileFlag_2 = 0;
+
+	//マップチップ描画フラグ
+	int DrawFlag_1 = 0;
+	int DrawFlag_2 = 0;
+	
 	//初期化
 	void Init();
 

@@ -18,7 +18,8 @@ void PLAY::Init()
 	m_BG_x[0] = WINDOW_WIDTH/2;
 	m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
 	m_BG_y = WINDOW_HEIGHT/2;
-	
+	//背景移動量
+	m_BG_move_x = 0;
 
 
 	
@@ -40,10 +41,12 @@ void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
 	player.GetPosX();
+	
 
 	//背景スクロール処理
-	m_BG_x[0] -= 3;
-	m_BG_x[1] -= 3;
+	m_BG_x[0] -= 10;
+	m_BG_x[1] -= 10;
+	m_BG_move_x -= 10;
 
 	if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
 	{
@@ -75,12 +78,10 @@ void PLAY::Draw()
 
 	player.Draw();				//プレイヤーの描画処理
 
-	m_map.Draw(m_screen.GetScreenX());
+	m_map.Draw(-m_BG_move_x);
 
 	//デバッグ
 	SetFontSize(30);
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", m_BG_x[0], true);
-	DrawFormatString(100, 200, GetColor(255, 255, 255), "%d", m_BG_x[1], true);
 	SetFontSize(16);
 }
 

@@ -35,6 +35,8 @@ private:
 	int m_BG_x[2];
 	int m_BG_y;
 	
+	//”wŒiˆÚ“®—Ê
+	int m_BG_move_x;
 
 public:
 
