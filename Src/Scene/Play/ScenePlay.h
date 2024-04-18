@@ -7,6 +7,7 @@
 #include "../../Collision/Collision.h"
 #include "../../Input/Input.h"
 #include "../../Screen/Screen.h"
+#include "../../Map/Map.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 2;
@@ -25,6 +26,7 @@ private:
 	//クラス宣言
 	Player player;			//プレイヤークラス
 	Screen m_screen;		//スクリーンクラス
+	Map m_map;				//マップクラス
 
 	//画像ハンドル
 	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
