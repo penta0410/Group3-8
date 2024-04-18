@@ -44,9 +44,9 @@ void PLAY::Step()
 	
 
 	//”wŒiƒXƒNƒ[ƒ‹ˆ—
-	m_BG_x[0] -= 10;
-	m_BG_x[1] -= 10;
-	m_BG_move_x -= 10;
+	m_BG_x[0] -= 5;
+	m_BG_x[1] -= 5;
+	m_BG_move_x -= 5;
 
 	if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
 	{
