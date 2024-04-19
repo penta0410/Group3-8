@@ -54,8 +54,8 @@ void Player::Load()
 void Player::DefaultValue()
 {
 	//座標
-	m_posX = 100;			//X座標
-	m_posY = 300;			//Y座標
+	m_posX = 350;			//X座標
+	m_posY = 350;			//Y座標
 	m_nextPosX = 0;		//移動後のX座標
 	m_nextPosY = 0;		//移動後のY座標
 	old_pos_x = 0;		//移動前のX座標
@@ -193,23 +193,23 @@ void Player::Control()
 
 	//デバッグ(当たり判定)===============
 	//横移動処理
-	//左
-	if (CheckHitKey(KEY_INPUT_A) == 1)
-	{
-		//歩き
-		m_move_x = -5;
-		m_nextPosX -= 5;
+	////左
+	//if (CheckHitKey(KEY_INPUT_A) == 1)
+	//{
+	//	//歩き
+	//	m_move_x = -5;
+	//	m_nextPosX -= 5;
 
-	}
+	//}
 
-	//右
-	if (CheckHitKey(KEY_INPUT_D) == 1)
-	{
-		//歩き
-		m_move_x = 5;
-		m_nextPosX += 5;
+	////右
+	//if (CheckHitKey(KEY_INPUT_D) == 1)
+	//{
+	//	//歩き
+	//	m_move_x = 5;
+	//	m_nextPosX += 5;
 
-	}
+	//}
 
 	////下
 	//if (CheckHitKey(KEY_INPUT_S) == 1)

@@ -10,13 +10,14 @@
 #include "../../Map/Map.h"
 
 //プレイシーン画像枚数
-const int PLAY_IMAGE_PATH_NUM = 2;
+const int PLAY_IMAGE_PATH_NUM = 3;
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 {
 	"Data/Play/BackGround.png",		//背景
 	"Data/Play/BackGround2.png",		//背景２
+	"Data/Play/coin.png",				//コイン
 };
 
 const char PLAY_SCENE_BGM[] = { "" };				//プレイシーンのBGM

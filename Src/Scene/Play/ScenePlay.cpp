@@ -33,6 +33,7 @@ void PLAY::Load()
 {
 	m_ImageHandle[0] = LoadGraph(PLAY_PATH[0]);			//プレイ背景
 	m_ImageHandle[1] = LoadGraph(PLAY_PATH[1]);			//プレイ背景2
+	m_ImageHandle[2] = LoadGraph(PLAY_PATH[2]);			//コイン
 	player.Load();				//プレイヤーの読み込み
 }
 
@@ -83,6 +84,12 @@ void PLAY::Draw()
 	//背景描画
 	DrawRotaGraph(m_BG_x[0], m_BG_y, 1.0f, 0.0f, m_ImageHandle[0], true);
 	DrawRotaGraph(m_BG_x[1], m_BG_y, 1.0f, 0.0f, m_ImageHandle[1], true);
+
+	DrawRotaGraph(2000 + m_BG_move_x, 400, 1.0f, 0.0f, m_ImageHandle[2], true);
+	DrawRotaGraph(1950 + m_BG_move_x, 450, 1.0f, 0.0f, m_ImageHandle[2], true);
+	DrawRotaGraph(2050 + m_BG_move_x, 450, 1.0f, 0.0f, m_ImageHandle[2], true);
+	DrawRotaGraph(1900 + m_BG_move_x, 500, 1.0f, 0.0f, m_ImageHandle[2], true);
+	DrawRotaGraph(2100 + m_BG_move_x, 500, 1.0f, 0.0f, m_ImageHandle[2], true);
 
 	m_map.Draw(-m_BG_move_x);	//マップ描画
 
@@ -164,37 +171,6 @@ void PLAY::MapCollision(int mapmove)
 					player.PlayerLanding();
 
 				}
-
-				////アイテムブロック
-				////左から一つ目
-				//if (m_ItemBlock_x[0] < m_Player.GetPosX() + PLAYER_SIZE_W - 40 &&
-				//	m_Player.GetPosX() - 300 < m_ItemBlock_x[0] + (m_ItemBlock_w - 30))
-				//{
-				//	if (dirArray[0] && ItemBlockFlag[0] == 1)
-				//	{
-				//		m_Map.m_FileReadMapData[7][4] = 3;
-				//		m_itemFlag[0] = 1;
-				//		ItemBlockFlag[0] = 0;
-
-				//	}
-				//}
-
-				////左から二つ目
-				//if (m_ItemBlock_x[1] + 290 < m_Player.GetPosX() + PLAYER_SIZE_W - 40 &&
-				//	m_Player.GetPosX() - 300 < m_ItemBlock_x[1] + (m_ItemBlock_w - 30))
-				//{
-
-				//	if (dirArray[0] && ItemBlockFlag[1] == 1)
-				//	{
-				//		m_Map.m_FileReadMapData[7][5] = 3;
-				//		m_itemFlag[1] = 1;
-
-				//		ItemBlockFlag[1] = 0;
-
-				//	}
-
-				//}
-
 			}
 		}
 	}
