@@ -31,6 +31,9 @@ void Player::Init()
 	//HP
 	m_HP = 0.0f;
 
+	//SE
+	m_PlayerDashSE = -1;
+
 	//重力フラグ
 	isGravity = false;
 
@@ -39,7 +42,11 @@ void Player::Init()
 //読み込み処理
 void Player::Load()
 {
+	//画像読み込み
 	LoadDivGraph(PLAYER_IMAGE_PATH, PLAYER_IMG_TOTAL_NUM, PLAYER_IMG_X_NUM, PLAYER_IMG_Y_NUM, PLAYER_WIDTH, PLAYER_HEIGHT, m_ImageHandle);
+
+	//SE
+	m_PlayerDashSE = LoadSoundMem(PLAYER_RUN_SE);
 
 }
 
@@ -396,6 +403,15 @@ bool Player::CanJumpPlayer()
 
 	return true;
 
+}
+
+//プレイヤーがダッシュしていたらSEを流す
+void Player::PlaySoundDashSE()
+{
+	if (state == PLAYER_ANIMATION_TYPE_RUN)
+	{
+		PlaySoundMem(m_PlayerDashSE, DX_PLAYTYPE_BACK);
+	}
 }
 
 // 座標を更新

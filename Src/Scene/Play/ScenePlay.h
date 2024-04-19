@@ -19,6 +19,8 @@ const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 	"Data/Play/BackGround2.png",		//背景２
 };
 
+const char PLAY_SCENE_BGM[] = { "" };				//プレイシーンのBGM
+
 //プレイシーンクラス
 class PLAY : public SCENE_BASE
 {

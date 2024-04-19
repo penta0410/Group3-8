@@ -9,6 +9,10 @@
 
 const char PLAYER_IMAGE_PATH[] = { "Data/Player/sample08.png" };			//画像パス
 
+const char PLAYER_RUN_SE[] = { "data/Player/SE/芝生の上を走る.mp3" };				//走っているときのSE
+const char PLAYER_JUMP_SE[] = { "" };				//ジャンプしているときのSE
+
+
 const int PLAYER_WIDTH = 32;											//横サイズ
 const int PLAYER_HEIGHT = 32;											//縦サイズ
 const int PLAYER_W_R = 16;												//横の半径
@@ -77,6 +81,9 @@ private:
 	//アニメーション関連
 	int m_Animation_Num;					//アニメーション番号
 	int m_AnimationFreamCnt;				//アニメーション用フレームカウント
+
+	//SE
+	int m_PlayerDashSE;					//プレイヤーがダッシュしているときのSE
 
 	//プレイヤー画像反転フラグ
 	int m_PlayerVisualDirection = 0;
@@ -178,6 +185,9 @@ public:
 
 	//プレイヤーが空中状態かどうか
 	bool IsAirPlayer();
+
+	//プレイヤーが走っていたらダッシュSEを流す
+	void PlaySoundDashSE();
 
 
 };
