@@ -50,7 +50,8 @@ public:
 	void Draw() override;
 	//Œãˆ—
 	void Fin() override;
-
+	// ƒ}ƒbƒv‚Ì“–‚½‚è”»’è
+	void MapCollision();
 
 };
 

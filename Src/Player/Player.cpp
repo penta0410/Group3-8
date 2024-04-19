@@ -191,3 +191,93 @@ void Player::Gravity()
 
 	}
 }
+
+// 進んでいる方向をチェック
+// 上下左右の順になっている
+void Player::GetMoveDirection(bool* _dirArray) {
+
+	// 右方向のチェック
+	if (m_nextPosX > m_posX) {
+		_dirArray[3] = true;
+
+	}
+
+	// 左方向のチェック
+	if (m_nextPosX < m_posX) {
+
+		_dirArray[2] = true;
+
+	}
+
+	// 下方向のチェック
+	if (m_nextPosY > m_posY) {
+		_dirArray[1] = true;
+
+	}
+
+	// 上方向のチェック
+	if (m_nextPosY < m_posY) {
+		_dirArray[0] = true;
+
+	}
+
+}
+
+//空中状態かどうか
+bool Player::IsAirPlayer()
+{
+	switch (state)
+	{
+	case PLAYER_STATE_MIDAIR:
+	case PLAYER_STATE_JUMP:
+	case PLAYER_STATE_FALL:
+		return true;
+
+	}
+
+	return false;
+
+}
+
+//天井処理
+void Player::PlayerCeiling()
+{
+	//ｙの移動量をリセット
+	m_move_y = 0.0f;
+
+	if (IsAirPlayer())
+	{
+		//プレイヤー落下状態に変更
+		state = PLAYER_STATE_FALL;
+
+	}
+
+}
+
+//着地処理
+void Player::PlayerLanding()
+{
+	//ｙの移動量をリセット
+	m_move_y = 0.0f;
+
+	//待機状態に戻す
+	if (IsAirPlayer())
+	{
+		//待機状態に変更
+		state = PLAYER_STATE_STAND;
+
+	}
+
+}
+
+//座標を更新
+void Player::SetNextPosX(int _posX)
+{
+	m_nextPosX = _posX;
+}
+
+//座標を更新
+void Player::SetNextPosY(int _posY)
+{
+	m_nextPosY = _posY;
+}

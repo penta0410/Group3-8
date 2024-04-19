@@ -44,9 +44,9 @@ void PLAY::Step()
 	
 
 	//背景スクロール処理
-	m_BG_x[0] -= 5;
-	m_BG_x[1] -= 5;
-	m_BG_move_x -= 5;
+	m_BG_x[0] -= PLAYER_SPEED;
+	m_BG_x[1] -= PLAYER_SPEED;
+	m_BG_move_x -= PLAYER_SPEED;
 
 	if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
 	{
@@ -94,4 +94,252 @@ void PLAY::Fin()
 		//プレイINITへ移動
 		g_CurrentSceneID = SCENE_ID_INIT_RESULT;
 	}
+}
+
+//マップの当たり判定
+void PLAY::MapCollision()
+{
+	//プレイヤー
+	//Y方向のみ当たり判定をチェックする
+	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
+	{
+		for (int mapIndexX = 0; mapIndexX < MAP_DATA_X; mapIndexX++)
+		{
+			//ブロック以外は処理しない
+			if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == MAPCHIP_NONE)
+				continue;
+
+			//どの方向に進んでいたかチェック
+			bool dirArray[4] = { false,false,false,false };
+			player.GetMoveDirection(dirArray);
+
+			//矩形の当たり判定用のデータを準備
+			//プレイヤーの情報
+			int Ax = player.GetPosX();
+			int Ay = player.GetPosY();
+			int Aw = PLAYER_WIDTH;
+			int Ah = PLAYER_HEIGHT;
+
+			//オブジェクトの情報
+			int Bx = mapIndexX * MAP_SIZE;
+			int By = mapIndexY * MAP_SIZE;
+			int Bw = MAP_SIZE;
+			int Bh = MAP_SIZE;
+
+			//Y方向のみに移動したと仮定した座標で当たり判定をチェックします
+			Ay = player.GetNextPosY();
+			Ax = player.GetPosX();
+
+			//当たっているかチェック
+			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+
+				// 上方向の修正
+				if (dirArray[0]) {
+					// めり込み量を計算する
+					int overlap = By + Bh - Ay;
+					player.SetNextPosY(Ay + overlap);
+
+					//天井についたら押し返す
+					player.PlayerCeiling();
+
+				}
+
+				//下方向の修正
+				if (dirArray[1]) {
+					// めり込み量を計算する
+					int overlap = Ay + Ah - By;
+					player.SetNextPosY(Ay - overlap);
+
+					//落下したら
+					player.PlayerLanding();
+
+				}
+
+				////アイテムブロック
+				////左から一つ目
+				//if (m_ItemBlock_x[0] < m_Player.GetPosX() + PLAYER_SIZE_W - 40 &&
+				//	m_Player.GetPosX() - 300 < m_ItemBlock_x[0] + (m_ItemBlock_w - 30))
+				//{
+				//	if (dirArray[0] && ItemBlockFlag[0] == 1)
+				//	{
+				//		m_Map.m_FileReadMapData[7][4] = 3;
+				//		m_itemFlag[0] = 1;
+				//		ItemBlockFlag[0] = 0;
+
+				//	}
+				//}
+
+				////左から二つ目
+				//if (m_ItemBlock_x[1] + 290 < m_Player.GetPosX() + PLAYER_SIZE_W - 40 &&
+				//	m_Player.GetPosX() - 300 < m_ItemBlock_x[1] + (m_ItemBlock_w - 30))
+				//{
+
+				//	if (dirArray[0] && ItemBlockFlag[1] == 1)
+				//	{
+				//		m_Map.m_FileReadMapData[7][5] = 3;
+				//		m_itemFlag[1] = 1;
+
+				//		ItemBlockFlag[1] = 0;
+
+				//	}
+
+				//}
+
+			}
+		}
+	}
+
+	// X方向のみ当たり判定をチェックする
+	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
+	{
+		for (int mapIndexX = 0; mapIndexX < MAP_DATA_X; mapIndexX++)
+		{
+			// ブロック以外は処理しない
+			if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == MAPCHIP_NONE)
+				continue;
+
+			//どの方向に進んでいたかチェック
+			bool dirArray[4] = { false,false,false,false };
+			player.GetMoveDirection(dirArray);
+
+			//プレイヤーの情報
+			int Ax = player.GetPosX();
+			int Ay = player.GetPosY();
+			int Aw = PLAYER_WIDTH;
+			int Ah = PLAYER_HEIGHT;
+
+			//オブジェクトの情報
+			int Bx = mapIndexX * MAP_SIZE;
+			int By = mapIndexY * MAP_SIZE;
+			int Bw = MAP_SIZE;
+			int Bh = MAP_SIZE;
+
+			//X方向のみに移動したと仮定した座標で当たり判定をチェック
+			Ay = player.GetNextPosY();
+			Ax = player.GetNextPosX();
+
+			// 当たっているかチェック
+			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+
+				// 左方向の修正
+				if (dirArray[2]) {
+					// めり込み量を計算する
+					int overlap = Bx + Bw - Ax;
+					player.SetNextPosX(Ax + overlap);
+				}
+
+				// 右方向の修正
+				if (dirArray[3]) {
+					// めり込み量を計算する
+					int overlap = Ax + Aw - Bx;
+					player.SetNextPosX(Ax - overlap);
+				}
+			}
+		}
+	}
+
+	////敵
+	////Y方向のみ当たり判定をチェックする
+	//for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
+	//{
+	//	for (int mapIndexX = 0; mapIndexX < MAP_DATA_X; mapIndexX++)
+	//	{
+	//		//ブロック以外は処理しない
+	//		if (m_Map.m_FileReadMapData[mapIndexY][mapIndexX] == MAPCHIP_NONE)
+	//			continue;
+
+
+	//		//どの方向に進んでいたかチェック
+	//		bool dirArray[4] = { false,false,false,false };
+	//		m_enemy.GetMoveDirection(dirArray);
+
+
+	//		//矩形の当たり判定用のデータを準備
+	//		//敵の情報
+	//		int Ax = m_enemy.GetPosX() - 30;
+	//		int Ay = m_enemy.GetPosY() - 30;
+	//		int Aw = ENEMY_W + 30;
+	//		int Ah = ENEMY_H + 30;
+
+	//		//オブジェクトの情報
+	//		int Bx = mapIndexX * MAP_SIZE - 240;
+	//		int By = mapIndexY * MAP_SIZE + 30;
+	//		int Bw = MAP_SIZE - 30;
+	//		int Bh = MAP_SIZE;
+
+	//		//Y方向のみに移動したと仮定した座標で当たり判定をチェックします
+	//		Ay = m_enemy.GetNextPosY();
+	//		Ax = m_enemy.GetPosX();
+
+	//		//当たっているかチェック
+	//		if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh))
+	//		{
+
+	//			// 上方向の修正
+	//			if (dirArray[0]) {
+	//				// めり込み量を計算する
+	//				int overlap = By + Bh - Ay;
+	//				m_enemy.SetPosY(Ay + overlap);
+	//			}
+
+	//			//下方向の修正
+	//			if (dirArray[1]) {
+	//				// めり込み量を計算する
+	//				int overlap = Ay + Ah - By;
+	//				m_enemy.SetPosY(Ay - overlap);
+	//			}
+	//		}
+	//	}
+	//}
+
+	//// X方向のみ当たり判定をチェックする
+	//for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
+	//{
+	//	for (int mapIndexX = 0; mapIndexX < MAP_DATA_X; mapIndexX++)
+	//	{
+	//		// ブロック以外は処理しない
+	//		if (m_Map.m_FileReadMapData[mapIndexY][mapIndexX] == MAPCHIP_NONE)
+	//			continue;
+
+	//		//どの方向に進んでいたかチェック
+	//		bool dirArray[4] = { false,false,false,false };
+	//		m_enemy.GetMoveDirection(dirArray);
+
+	//		//敵の情報
+	//		int Ax = m_enemy.GetPosX() - 30;
+	//		int Ay = m_enemy.GetPosY() - 30;
+	//		int Aw = ENEMY_W;
+	//		int Ah = ENEMY_H;
+
+	//		//オブジェクトの情報
+	//		int Bx = mapIndexX * MAP_SIZE - 240;
+	//		int By = mapIndexY * MAP_SIZE + 30;
+	//		int Bw = MAP_SIZE - 30;
+	//		int Bh = MAP_SIZE;
+
+	//		//X方向のみに移動したと仮定した座標で当たり判定をチェック
+	//		Ay = m_enemy.GetPosY();
+	//		Ax = m_enemy.GetPosX();
+
+	//		// 当たっているかチェック
+	//		if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh))
+	//		{
+
+	//			// 左方向の修正
+	//			if (dirArray[2]) {
+	//				// めり込み量を計算する
+	//				int overlap = Bx + Bw - Ax;
+	//				m_enemy.SetPosX(Ax + overlap);
+	//			}
+
+	//			// 右方向の修正
+	//			if (dirArray[3]) {
+	//				// めり込み量を計算する
+	//				int overlap = Ax + Aw - Bx;
+	//				m_enemy.SetPosX(Ax - overlap);
+	//			}
+	//		}
+	//	}
+	//}
+
 }
