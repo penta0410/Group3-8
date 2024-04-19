@@ -40,8 +40,6 @@ void PLAY::Load()
 void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
-	player.GetPosX();
-	player.Gravity();			//プレイヤー重力
 
 	//背景スクロール処理
 	m_BG_x[0] -= PLAYER_SPEED;
@@ -56,6 +54,16 @@ void PLAY::Step()
 	{
 		m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
 	}
+
+	//マップの当たり判定
+	MapCollision(-m_BG_move_x);
+
+	//プレイヤーの座標を更新
+	player.UpdatePos();
+
+	
+
+	
 
 	//リザルトシーンへの遷移
 	//Enterキー押されたなら
@@ -76,9 +84,11 @@ void PLAY::Draw()
 	DrawRotaGraph(m_BG_x[0], m_BG_y, 1.0f, 0.0f, m_ImageHandle[0], true);
 	DrawRotaGraph(m_BG_x[1], m_BG_y, 1.0f, 0.0f, m_ImageHandle[1], true);
 
+	m_map.Draw(-m_BG_move_x);	//マップ描画
+
 	player.Draw();				//プレイヤーの描画処理
 
-	m_map.Draw(-m_BG_move_x);
+	
 
 	//デバッグ
 	SetFontSize(30);
@@ -97,7 +107,7 @@ void PLAY::Fin()
 }
 
 //マップの当たり判定
-void PLAY::MapCollision()
+void PLAY::MapCollision(int mapmove)
 {
 	//プレイヤー
 	//Y方向のみ当たり判定をチェックする
@@ -115,23 +125,23 @@ void PLAY::MapCollision()
 
 			//矩形の当たり判定用のデータを準備
 			//プレイヤーの情報
-			int Ax = player.GetPosX();
-			int Ay = player.GetPosY();
-			int Aw = PLAYER_WIDTH;
-			int Ah = PLAYER_HEIGHT;
+			int Ax = player.GetPosX() - 20 - mapmove;
+			int Ay = player.GetPosY() - 10;
+			int Aw = PLAYER_WIDTH * 2;
+			int Ah = PLAYER_HEIGHT * 2;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE;
+			int Bx = mapIndexX * MAP_SIZE + 20 - mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
-			int Bh = MAP_SIZE;
+			int Bh = MAP_SIZE + 10;
 
 			//Y方向のみに移動したと仮定した座標で当たり判定をチェックします
 			Ay = player.GetNextPosY();
 			Ax = player.GetPosX();
 
 			//当たっているかチェック
-			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
+			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) {
 
 				// 上方向の修正
 				if (dirArray[0]) {
@@ -203,16 +213,16 @@ void PLAY::MapCollision()
 			player.GetMoveDirection(dirArray);
 
 			//プレイヤーの情報
-			int Ax = player.GetPosX();
-			int Ay = player.GetPosY();
-			int Aw = PLAYER_WIDTH;
-			int Ah = PLAYER_HEIGHT;
+			int Ax = player.GetPosX() - 20 - mapmove;
+			int Ay = player.GetPosY() - 10;
+			int Aw = PLAYER_WIDTH * 2;
+			int Ah = PLAYER_HEIGHT * 2;
 
 			//オブジェクトの情報
-			int Bx = mapIndexX * MAP_SIZE;
+			int Bx = mapIndexX * MAP_SIZE + 20 - mapmove;
 			int By = mapIndexY * MAP_SIZE;
 			int Bw = MAP_SIZE;
-			int Bh = MAP_SIZE;
+			int Bh = MAP_SIZE + 10;
 
 			//X方向のみに移動したと仮定した座標で当たり判定をチェック
 			Ay = player.GetNextPosY();

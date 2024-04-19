@@ -7,15 +7,15 @@
 #include "../Collision/Collision.h"
 #include "../Enemy/Enemy.h"
 
-const char PLAYER_IMAGE_PATH[] = { "Data/Player/sample08" };			//画像パス
+const char PLAYER_IMAGE_PATH[] = { "Data/Player/sample08.png" };			//画像パス
 
 const int PLAYER_WIDTH = 32;											//横サイズ
 const int PLAYER_HEIGHT = 32;											//縦サイズ
 const int PLAYER_W_R = 16;												//横の半径
 const int PLAYER_H_R = 16;												//縦の半径
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
-const float PLAYER_SPEED = 2.5;											//プレイヤーのXスピード
-const float PLAYER_Y_SPEED = 15.0f;										//プレイヤーのYスピード
+const int PLAYER_SPEED = 4;											//プレイヤーのXスピード
+const int PLAYER_Y_SPEED = 20;										//プレイヤーのYスピード
 const int PLAYER_IMG_TOTAL_NUM = 12;									//プレイヤーの画像総数
 const int PLAYER_IMG_X_NUM = 3;											//プレイヤーの横の枚数
 const int PLAYER_IMG_Y_NUM = 4;											//プレイヤーの縦の枚数
@@ -28,31 +28,25 @@ const float GRAVITY = 0.7f;												//重力
 //プレイヤーアニメーション種類
 enum PlayerAnimationType {
 
-	PLAYER_ANIMATION_TYPE_STAND = 0,
-	PLAYER_ANIMATION_TYPE_WALK,
-	PLAYER_ANIMATION_TYPE_RUN,
+	PLAYER_ANIMATION_TYPE_RUN = 0,
 	PLAYER_ANIMATION_TYPE_JUMP,
 	PLAYER_ANIMATION_TYPE_MIDAIR,
 	PLAYER_ANIMATION_TYPE_FALL,
 	PLAYER_ANIMATION_TYPE_LANDING,
-	PLAYER_ANIMATION_TYPE_DAMAGE,
-	PLAYER_ANIMATION_TYPE_ATTACK,
+	
 
 	PLAYER_ANIMATION_TYPE_MAX,
 };
 
 //プレイヤーのアニメーションの状態
 enum PlayerState {
-	PLAYER_STATE_STAND = 0,
-	PLAYER_STATE_WALK,
-	PLAYER_STATE_RUN,
+	
+	PLAYER_STATE_RUN = 0,
 	PLAYER_STATE_JUMP,
 	PLAYER_STATE_MIDAIR,
 	PLAYER_STATE_FALL,
 	PLAYER_STATE_LANDING,
-	PLAYER_STATE_DAMAGE,
-	PLAYER_STATE_ATTACK,
-
+	
 };
 
 class Player
@@ -74,8 +68,8 @@ private:
 	float old_pos_y = 0.0f;
 
 	//プレイヤー移動量
-	float m_move_x = 0;
-	float m_move_y = 0;
+	float m_move_x = 0.0f;
+	float m_move_y = 0.0f;
 
 	//画像ハンドル
 	int m_ImageHandle[PLAYER_IMAGE_NUM];
@@ -160,6 +154,9 @@ public:
 	void SetNextPosX(int _posX);
 	void SetNextPosY(int _posY);
 
+	//座標を更新
+	void UpdatePos();
+
 	//進んでいる方向をチェック
 	//上下左右
 	void GetMoveDirection(bool* _dirArray);
@@ -167,11 +164,21 @@ public:
 	//プレイヤー天井処理
 	void PlayerCeiling();
 
-	//プレイヤーが空中状態かどうか
-	bool IsAirPlayer();
+	//プレイヤー落下前チェック
+	void StepPlayerMidAir();
+
+	//プレイヤー落下更新
+	void StepPlayerFall();
 
 	//プレイヤー着地処理
 	void PlayerLanding();
+
+	//プレイヤーがジャンプ可能かどうか
+	bool CanJumpPlayer();
+
+	//プレイヤーが空中状態かどうか
+	bool IsAirPlayer();
+
 
 };
 

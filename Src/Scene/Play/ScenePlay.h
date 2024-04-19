@@ -51,7 +51,7 @@ public:
 	//Œãˆ—
 	void Fin() override;
 	// ƒ}ƒbƒv‚Ì“–‚½‚è”»’è
-	void MapCollision();
+	void MapCollision(int mapmove);
 
 };
 
