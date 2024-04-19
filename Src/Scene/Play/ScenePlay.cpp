@@ -41,7 +41,7 @@ void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
 	player.GetPosX();
-	
+	player.Gravity();			//プレイヤー重力
 
 	//背景スクロール処理
 	m_BG_x[0] -= PLAYER_SPEED;
