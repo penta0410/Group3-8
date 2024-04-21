@@ -129,7 +129,7 @@ void PLAY::MapCollision(int mapmove)
 
 			//矩形の当たり判定用のデータを準備
 			//プレイヤーの情報
-			int Ax = player.GetPosX() - 20 - mapmove;
+			int Ax = player.GetPosX() - 20;
 			int Ay = player.GetPosY() - 10;
 			int Aw = PLAYER_WIDTH * 2;
 			int Ah = PLAYER_HEIGHT * 2;
@@ -185,7 +185,7 @@ void PLAY::MapCollision(int mapmove)
 			player.GetMoveDirection(dirArray);
 
 			//プレイヤーの情報
-			int Ax = player.GetPosX() - 20 - mapmove;
+			int Ax = player.GetPosX() - 20;
 			int Ay = player.GetPosY() - 10;
 			int Aw = PLAYER_WIDTH * 2;
 			int Ah = PLAYER_HEIGHT * 2;
@@ -223,7 +223,7 @@ void PLAY::MapCollision(int mapmove)
 //コイン座標初期化
 void PLAY::InitCoin()
 {
-	for (int coin_num; coin_num < COIN_NUM; coin_num++)
+	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
 	{
 		m_coin_x[coin_num] = COIN_PLACE[coin_num][0];
 		m_coin_y[coin_num] = COIN_PLACE[coin_num][1];
@@ -239,13 +239,15 @@ void PLAY::CoinCollision(int mapmove)
 		//コインが描画されていたら
 		if (CoinFlag[coin_num] == 1)
 		{
-			////当たっているかチェック
-			//if (IsHitRect()) 
-			//{
-			//	//コイン描画フラグoff
-			//	CoinFlag[coin_num] = 0;
+			//当たっているかチェック
+			if (IsHitRect(player.GetPosX() - 20, player.GetPosY() - 10, PLAYER_WIDTH * 2,
+				PLAYER_HEIGHT * 2, m_coin_x[coin_num] - 25 - mapmove, m_coin_y[coin_num] - 24,
+				50, 48))
+			{
+				//コイン描画フラグoff
+				CoinFlag[coin_num] = 0;
 
-			//}
+			}
 		}
 	}
 }
@@ -253,7 +255,7 @@ void PLAY::CoinCollision(int mapmove)
 //コイン描画
 void PLAY::DrawCoin(int mapmove)
 {
-	for (int coin_num; coin_num < COIN_NUM; coin_num++)
+	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
 	{
 		if (CoinFlag[coin_num] == 1)
 		{
