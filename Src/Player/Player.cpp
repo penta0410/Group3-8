@@ -177,15 +177,23 @@ void Player::Control()
 	m_nextPosX = m_posX;
 	m_nextPosY = m_posY;
 
+
+
 	//ジャンプ処理
 	if (IsKeyPush(KEY_INPUT_SPACE))
 	{
 		if (CanJumpPlayer() == true)
 		{
 			m_move_y -= PLAYER_Y_SPEED;
+
+			m_JumpCnt++;
 			
-			//ジャンプ状態に設定
-			state = PLAYER_STATE_JUMP;
+			if (m_JumpCnt >= 2) {
+				//ジャンプ状態に設定
+				state = PLAYER_STATE_JUMP;
+
+				m_JumpCnt = 0;
+			}
 		}
 	}
 

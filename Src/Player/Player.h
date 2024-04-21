@@ -19,7 +19,7 @@ const int PLAYER_W_R = 16;												//横の半径
 const int PLAYER_H_R = 16;												//縦の半径
 const int PLAYER_IMAGE_NUM = 12;										//画像の配列の数
 const int PLAYER_SPEED = 4;											//プレイヤーのXスピード
-const int PLAYER_Y_SPEED = 20;										//プレイヤーのYスピード
+const int PLAYER_Y_SPEED = 13;										//プレイヤーのYスピード
 const int PLAYER_IMG_TOTAL_NUM = 12;									//プレイヤーの画像総数
 const int PLAYER_IMG_X_NUM = 3;											//プレイヤーの横の枚数
 const int PLAYER_IMG_Y_NUM = 4;											//プレイヤーの縦の枚数
@@ -74,6 +74,9 @@ private:
 	//プレイヤー移動量
 	float m_move_x = 0.0f;
 	float m_move_y = 0.0f;
+
+	//ジャンプを何回したかどうか
+	int m_JumpCnt = 0;
 
 	//画像ハンドル
 	int m_ImageHandle[PLAYER_IMAGE_NUM];
