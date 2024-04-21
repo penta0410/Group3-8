@@ -73,8 +73,6 @@ private:
 	//トラップ座標
 	int m_trap_x[TRAP_NUM];
 	int m_trap_y[TRAP_NUM];
-	//トラップ描画フラグ
-	int TrapFlag[TRAP_NUM];
 
 public:
 
