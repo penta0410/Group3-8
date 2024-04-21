@@ -10,10 +10,12 @@
 #include "../../Map/Map.h"
 
 //プレイシーン画像枚数
-const int PLAY_IMAGE_PATH_NUM = 3;
+const int PLAY_IMAGE_PATH_NUM = 4;
 
 //コイン枚数
-const int COIN_NUM = 200;
+const int COIN_NUM = 5;
+//トラップ数
+const int TRAP_NUM = 5;
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
@@ -21,6 +23,7 @@ const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 	"Data/Play/BackGround.png",		//背景
 	"Data/Play/BackGround2.png",		//背景２
 	"Data/Play/coin.png",				//コイン
+	"Data/Play/Trap.png",				//トラップ
 };
 
 const char PLAY_SCENE_BGM[] = { "" };				//プレイシーンのBGM
@@ -30,6 +33,15 @@ const char PLAY_SCENE_BGM[] = { "" };				//プレイシーンのBGM
 const int COIN_PLACE[COIN_NUM][2] =
 {
 	{2000, 400},{1950, 450},{2050, 450},{1900, 500},{2100, 500},
+
+};
+
+//トラップ座標
+//第一ｘ座標、第二ｙ座標
+const int TRAP_PLACE[TRAP_NUM][2] =
+{
+	{2500, 570},{2600, 570},{2900, 570},{3000, 570},{3300, 570},
+
 
 };
 
@@ -58,6 +70,12 @@ private:
 	//コイン描画フラグ
 	int CoinFlag[COIN_NUM];
 
+	//トラップ座標
+	int m_trap_x[TRAP_NUM];
+	int m_trap_y[TRAP_NUM];
+	//トラップ描画フラグ
+	int TrapFlag[TRAP_NUM];
+
 public:
 
 	//初期化
@@ -78,6 +96,11 @@ public:
 	void DrawCoin(int mapmove);
 	//コイン当たり判定
 	void CoinCollision(int mapmove);
-
+	//トラップ座標初期化
+	void InitTrap();
+	//トラップ描画
+	void DrawTrap(int mapmove);
+	//トラップ当たり判定
+	void TrapCollision(int mapmove);
 };
 

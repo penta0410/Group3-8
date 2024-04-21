@@ -25,6 +25,8 @@ void PLAY::Init()
 	//コイン初期化
 	InitCoin();
 	
+	//トラップ初期化
+	InitTrap();
 
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
@@ -36,6 +38,8 @@ void PLAY::Load()
 	m_ImageHandle[0] = LoadGraph(PLAY_PATH[0]);			//プレイ背景
 	m_ImageHandle[1] = LoadGraph(PLAY_PATH[1]);			//プレイ背景2
 	m_ImageHandle[2] = LoadGraph(PLAY_PATH[2]);			//コイン
+	m_ImageHandle[3] = LoadGraph(PLAY_PATH[3]);			//トラップ
+
 	player.Load();				//プレイヤーの読み込み
 
 }
@@ -93,6 +97,9 @@ void PLAY::Draw()
 
 	//コイン
 	DrawCoin(m_BG_move_x);
+
+	//トラップ
+	DrawTrap(m_BG_move_x);
 
 	//デバッグ
 	SetFontSize(30);
@@ -262,4 +269,31 @@ void PLAY::DrawCoin(int mapmove)
 			DrawRotaGraph(m_coin_x[coin_num] + mapmove, m_coin_y[coin_num], 1.0f, 0.0f, m_ImageHandle[2], true);
 		}
 	}
+}
+
+//トラップ座標初期化
+void PLAY::InitTrap()
+{
+	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
+	{
+		m_trap_x[trap_num] = TRAP_PLACE[trap_num][0];
+		m_trap_y[trap_num] = TRAP_PLACE[trap_num][1];
+	}
+}
+
+//トラップ描画
+void PLAY::DrawTrap(int mapmove)
+{
+	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
+	{
+
+		DrawRotaGraph(m_trap_x[trap_num] + mapmove, m_trap_y[trap_num], 1.0f, 0.0f, m_ImageHandle[3], true);
+
+	}
+}
+
+//トラップ当たり判定
+void PLAY::TrapCollision(int mapmove)
+{
+
 }
