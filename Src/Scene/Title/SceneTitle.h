@@ -1,6 +1,8 @@
 #pragma once
 #include "../Scene.h"
 
+const char TITLE_BGM[] = { "Data/Sound/Title/ks011.wav" };		//タイトル画面のBGM
+
 //タイトルクラス
 class TITLE : public SCENE_BASE 
 {
@@ -9,6 +11,7 @@ private:
 	int m_GroundHndl;
 	int m_TitleHndl;
 	int m_EnterHndl;
+	int m_BGMHndl;
 
 	//地面のスライド用の変数
 	int m_GroundPosX;
@@ -29,6 +32,9 @@ public:
 	void Draw() override;
 	//後処理
 	void Fin() override;
+
+	//音楽を流すだけの処理
+	void PlayTitleMusic();
 
 };
 

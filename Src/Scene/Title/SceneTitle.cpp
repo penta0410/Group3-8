@@ -23,6 +23,7 @@ void TITLE::Init()
 	m_GroundHndl = 0;		//地面
 	m_TitleHndl = 0;		//タイトル名
 	m_EnterHndl = 0;		//エンター
+	m_BGMHndl = -1;			//タイトル画面BGM
 
 	//地面のスライド用の変数の初期化
 	m_GroundPosX = 0;
@@ -39,10 +40,16 @@ void TITLE::Init()
 //ロード
 void TITLE::Load()
 {
+	m_BGMHndl = LoadSoundMem(TITLE_BGM);
 	m_BackHndl = LoadGraph(TITEL_BACK_PATH);
 	m_GroundHndl = LoadGraph(TITEL_GROUND_PATH);
 	m_TitleHndl = LoadGraph(TITLE_PATH);
 	m_EnterHndl = LoadGraph(TITLE_ENTER_PATH);
+}
+
+void TITLE::PlayTitleMusic()
+{
+	PlaySoundMem(m_BGMHndl, DX_PLAYTYPE_LOOP);
 }
 
 //通常処理
@@ -109,6 +116,9 @@ void TITLE::Draw()
 //消去処理
 void TITLE::Fin()
 {
+	//削除
+	DeleteSoundMem(m_BGMHndl);
+
 	//SceneFlagが0の時
 	if (m_SceneFlag == 0)
 	{
