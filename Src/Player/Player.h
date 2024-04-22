@@ -7,6 +7,7 @@
 #include "../Collision/Collision.h"
 #include "../Enemy/Enemy.h"
 
+
 const char PLAYER_IMAGE_PATH[] = { "Data/Player/sample08.png" };			//‰æ‘œƒpƒX
 
 const char PLAYER_RUN_SE[] = { "data/Player/SE/Å¶‚Ìã‚ğ‘–‚é.mp3" };				//‘–‚Á‚Ä‚¢‚é‚Æ‚«‚ÌSE

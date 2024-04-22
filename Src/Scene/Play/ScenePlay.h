@@ -9,6 +9,7 @@
 #include "../../Screen/Screen.h"
 #include "../../Map/Map.h"
 #include "../Result/SceneResult.h"
+#include "../../Effect/Effect.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
@@ -33,6 +34,9 @@ private:
 	Screen m_screen;		//スクリーンクラス
 	Map m_map;				//マップクラス
 	RESULT m_result;
+
+	//エフェクト情報
+	EffectInfo effectInfo;
 
 	//画像ハンドル
 	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];

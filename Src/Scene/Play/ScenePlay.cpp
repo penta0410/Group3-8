@@ -13,6 +13,7 @@ void PLAY::Init()
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
 	m_map.Init();				//マップ初期化
+	effectInfo.InitEffect();	//エフェクト初期化
 
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH/2;
@@ -42,6 +43,7 @@ void PLAY::Load()
 	}
 
 	player.Load();				//プレイヤーの読み込み
+	effectInfo.LoadEffect(EFFECT_TYPE_SHINE, 3);		//エフェクト読み込み
 
 }
 
@@ -49,6 +51,7 @@ void PLAY::Load()
 void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
+	effectInfo.StepEffect();	//エフェクト通常処理
 
 	//背景スクロール処理
 	m_BG_x[0] -= PLAYER_SPEED;
@@ -93,6 +96,8 @@ void PLAY::Draw()
 
 	player.Draw();				//プレイヤーの描画処理
 
+	effectInfo.DrawEffect();	//エフェクト描画
+
 	//コイ描画
 	DrawRotaGraph(m_coin_x, m_coin_y, 0.8f, 1.0f, m_ImageHandle[2], true);
 
@@ -132,6 +137,8 @@ void PLAY::Draw()
 //後処理
 void PLAY::Fin()
 {
+	effectInfo.FinEffect();		//エフェクト後処理
+
 	//SceneFlagが0の時
 	if (m_SceneFlag == 0)
 	{
@@ -214,7 +221,7 @@ void PLAY::MapCollision(int mapmove)
 				{
 					m_map.CoinStep(mapIndexX, mapIndexY);
 					m_CoinNum += 1;
-
+					effectInfo.PlayEffect(EFFECT_TYPE_SHINE, mapIndexX * MAP_SIZE - m_BG_move_x, mapIndexY * MAP_SIZE);
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
@@ -225,7 +232,6 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
 					player.PlayerHeal();
-
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
@@ -302,7 +308,6 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
 					player.PlayerHeal();
-
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
