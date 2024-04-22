@@ -13,6 +13,7 @@
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
+const char PLAY_BGM_PATH[] = { "Data/Sound/Play/PlayBGM.mp3" };			//プレイシーンのBGM
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
@@ -62,12 +63,16 @@ private:
 	int m_numberHandle[10];
 	int num;
 
+	int m_PlayBgmHndl;
+
 public:
 
 	//初期化
 	void Init() override;
 	//ロード
 	void Load() override;
+	//音楽を流す
+	void PlaySound
 	//通常処理
 	void Step()	override;
 	//描画処理

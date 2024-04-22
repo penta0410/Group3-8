@@ -85,6 +85,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			{
 				//ƒ^ƒCƒgƒ‹‰Šú‰»
 				title.Init();
+				title.Load();
+				title.PlayTitleMusic();
 			}	break;
 			case SCENE_ID_LOOP_TITLE:
 			{
