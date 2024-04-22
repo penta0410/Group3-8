@@ -1,11 +1,18 @@
 #pragma once
 #include "../Scene.h"
+#include "../../Player/Player.h"
+
+const char RESULT_PATH[] = { "" };			//リザルトの画像パス
+
 
 //リザルトクラス
 class RESULT : public SCENE_BASE
 {
 private:
+	//クラス宣言
+	Player player;
 
+	int ImageHandle;
 
 
 public:
