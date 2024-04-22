@@ -135,19 +135,21 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			}	break;
 			case SCENE_ID_INIT_RESULT:
 			{
-				//プレイ初期化  
+				//リザルト初期化  
 				result.Init();
+				//リザルト読み込み
+				result.Load();
 			}   break;
 			case SCENE_ID_LOOP_RESULT:
 			{
-				//プレイ描画処理
+				//リザルト描画処理
 				result.Draw();
-				//プレイ通常処理
+				//リザルト通常処理
 				result.Step();
 			}	break;
 			case SCENE_ID_FIN_RESULT:
 			{
-				//プレイ後処理
+				//リザルト後処理
 				result.Fin();
 			}   break;
 			}//シーン振り分けのswitch文終了
