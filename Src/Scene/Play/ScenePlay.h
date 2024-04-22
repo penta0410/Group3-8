@@ -59,7 +59,7 @@ private:
 	int m_numberHandle[10];
 	int num;
 
-	int PlayBgmHndl;
+	int m_PlayBgmHndl;
 
 public:
 
@@ -67,6 +67,8 @@ public:
 	void Init() override;
 	//ƒ[ƒh
 	void Load() override;
+	//‰¹Šy‚ğ—¬‚·
+	void PlaySound
 	//’Êíˆ—
 	void Step()	override;
 	//•`‰æˆ—
