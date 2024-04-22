@@ -17,6 +17,8 @@ void Player::Init()
 	m_move_x = 0;		//X移動量
 	m_move_y = 0;		//Y移動量
 
+	CoinNum = 0;
+
 	//画像ハンドル
 	memset(m_ImageHandle, -1, sizeof(m_ImageHandle));
 
@@ -76,6 +78,8 @@ void Player::DefaultValue()
 	m_AnimationFreamCnt = 0;			//アニメーション用フレームカウント
 
 	SpeedFreamCnt = 0;					//プレイヤーのスピードアップ用フレームカウント
+
+	CoinNum = 0;
 
 	//HP
 	m_HP = 100;

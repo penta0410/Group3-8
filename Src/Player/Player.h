@@ -80,6 +80,9 @@ private:
 	//画像ハンドル
 	int m_ImageHandle[PLAYER_IMAGE_NUM];
 
+	//コインの取得数
+	int	CoinNum;
+
 	//アニメーション関連
 	int m_Animation_Num;					//アニメーション番号
 	int m_AnimationFreamCnt;				//アニメーション用フレームカウント
@@ -169,6 +172,11 @@ public:
 	//移動後の座標を取得
 	int GetNextPosX() { return m_nextPosX; }
 	int GetNextPosY() { return m_nextPosY; }
+
+	//コインをとった枚数の変数を設定
+	int SetCoinNum(int Num) { return CoinNum = Num; }
+	//コインをとった枚数の変数を取得
+	int GetCoinNum() { return CoinNum; }
 
 	//移動後の座標を設定
 	void SetNextPosX(int _posX);
