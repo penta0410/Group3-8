@@ -138,15 +138,6 @@ void RESULT::Draw()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_Numalpha);
 	}
 
-
-
-	
-
-	//デバッグ
-//	SetFontSize(30);
-//	DrawFormatString(100, 100, GetColor(255, 255, 255), "リザルトシーンです。", true);
-//	DrawFormatString(100, 200, GetColor(255, 255, 255), "enterでタイトルシーン", true);
-//	SetFontSize(16);
 }
 
 //後処理

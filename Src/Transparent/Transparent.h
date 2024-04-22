@@ -4,4 +4,4 @@
 #define ALPHA_SPEED (1);
 
 //“§‰ßŠÖ”
-int Transparent(int alpha);
+int Transparent(int alpha, int speed);

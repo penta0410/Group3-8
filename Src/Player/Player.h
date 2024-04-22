@@ -125,6 +125,9 @@ private:
 	//プレイヤー無敵フレーム
 	int PlayerInviFlame;
 
+	//プレイヤー透過処理
+	int m_alpha;
+
 	//SEハンドル
 	int SEHandle;
 
@@ -220,6 +223,12 @@ public:
 
 	//プレイヤー回復処理
 	void PlayerHeal();
+
+	//トラップ通常処理
+	void TrapStep();
+	
+	//プレイヤー無敵処理
+	void StepInvincible();
 };
 
 

@@ -101,8 +101,8 @@ void PLAY::Step()
 
 	//デバッグ(死亡できなかった時のため)=============================
 	//リザルトシーンへの遷移
-	//Enterキー & 左シフト押されたなら
-	if (IsKeyPush(KEY_INPUT_RETURN) && IsKeyPush(KEY_INPUT_LSHIFT))
+	//左シフト押されたなら
+	if (IsKeyPush(KEY_INPUT_LSHIFT))
 	{
 		//シーンフラグをリザルトシーンに変更
 		m_SceneFlag = 0;
@@ -266,7 +266,7 @@ void PLAY::MapCollision(int mapmove)
 					PlaySoundMem(m_PlayBgmHndl[2], DX_PLAYTYPE_LOOP, true);	//コインSE
 					StopSoundMem(m_PlayBgmHndl[2], true);
 
-					TrapStep();
+					player.TrapStep();
 				}
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
@@ -364,7 +364,7 @@ void PLAY::MapCollision(int mapmove)
 					PlaySoundMem(m_PlayBgmHndl[2], DX_PLAYTYPE_LOOP, true);	//コインSE
 					StopSoundMem(m_PlayBgmHndl[2], true);
 
-					TrapStep();
+					player.TrapStep();
 				}
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
@@ -386,30 +386,6 @@ void PLAY::MapCollision(int mapmove)
 	}
 }
 
-//トラップ通常処理
-void PLAY::TrapStep()
-{
-	//プレイヤーが無敵状態じゃなかったら
-	if (player.PlayerInvincible() == false)
-	{
-		//ｈｐゲット
-		int hp = player.GetHp();
-
-		if (hp > 0)
-		{
-			//トラップ当たったらｈｐ現象
-			hp = hp - TRAP_DAMAGE;
-
-			//hpセット
-			player.SetHp(hp);
-		}
-		else if (hp <= 0)
-		{
-			hp = 0;
-			player.SetHp(hp);
-		}
-	}
-}
 
 //コインセット
 void PLAY::SetCoin(int num)

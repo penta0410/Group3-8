@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Player.h"
+#include "../Map/Map.h"
+#include "../Transparent/Transparent.h"
 
 //初期化処理
 void Player::Init()
@@ -44,6 +46,9 @@ void Player::Init()
 
 	//重力フラグ
 	isGravity = false;
+
+	//プレイヤー透過処理
+	m_alpha = 0;
 
 	//SEハンドル
 	SEHandle = 0;
@@ -89,6 +94,9 @@ void Player::DefaultValue()
 	//プレイヤー無敵フラグ
 	PlayerInviFlag = false;
 
+	//プレイヤー透過処理
+	m_alpha = 255;
+
 	//重力フラグ
 	isGravity = false;
 }
@@ -111,6 +119,8 @@ void Player::Step()
 
 	Gravity();			//重力与える
 
+	StepInvincible();
+
 	//空中にいなければ状態をリセット
 	if (!IsAirPlayer())
 	{
@@ -132,7 +142,9 @@ void Player::Draw()
 	//DrawFormatString(32, 32, GetColor(255, 0, 0), "%f, %f", m_posX, m_posY);
 
 	//プレイヤー画像
-	DrawRotaGraph(m_posX + PLAYER_W_R , m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+	DrawRotaGraph(m_posX + PLAYER_W_R, m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_alpha);
 
 	//プレイヤーｈｐ描画
 	DrawHp();
@@ -389,7 +401,7 @@ bool Player::PlayerInvincible()
 	PlayerInviFlag = true;
 
 	//1秒たったら無敵解除
-	if (PlayerInviFlame > 60)
+	if (PlayerInviFlame > 120)
 	{
 		//プレイヤー無敵出ない
 		PlayerInviFlag = false;
@@ -429,4 +441,33 @@ bool Player::DeathPlayer()
 void Player::PlayerHeal()
 {
 	m_HP += 10;
+}
+
+//トラップ通常処理
+void Player::TrapStep()
+{
+	//プレイヤーが無敵状態じゃなかったら
+	if (PlayerInvincible() == false)
+	{
+		if (m_HP > 0)
+		{
+			//トラップ当たったらｈｐ現象
+			m_HP = m_HP - TRAP_DAMAGE;
+			
+		}
+		else if (m_HP <= 0)
+		{
+			m_HP = 0;
+		}
+	}
+}
+
+//プレイヤー無敵処理
+void Player::StepInvincible()
+{
+	//プレイヤーが無敵だったら
+	if (PlayerInvincible() == true)
+	{
+		
+	}
 }

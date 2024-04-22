@@ -91,9 +91,6 @@ public:
 	void Fin() override;
 	// マップの当たり判定
 	void MapCollision(int mapmove);
-	
-	//トラップ通常処理
-	void TrapStep();
 
 	//コインゲット
 	int GetCoin() { return m_CoinNum; };
