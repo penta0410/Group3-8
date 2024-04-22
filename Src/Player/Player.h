@@ -173,11 +173,6 @@ public:
 	int GetNextPosX() { return m_nextPosX; }
 	int GetNextPosY() { return m_nextPosY; }
 
-	//コインをとった枚数の変数を設定
-	int SetCoinNum(int Num) { return CoinNum = Num; }
-	//コインをとった枚数の変数を取得
-	int GetCoinNum() { return CoinNum; }
-
 	//移動後の座標を設定
 	void SetNextPosX(int _posX);
 	void SetNextPosY(int _posY);
