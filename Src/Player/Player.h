@@ -205,6 +205,11 @@ public:
 	//プレイヤー無敵かどうか
 	bool PlayerInvincible();
 
+	//Hp描画
+	void DrawHp();
+
+	//プレイヤー死亡したかどうか
+	bool DeathPlayer();
 };
 
 

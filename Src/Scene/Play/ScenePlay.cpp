@@ -155,7 +155,7 @@ void PLAY::MapCollision(int mapmove)
 
 			//Y方向のみに移動したと仮定した座標で当たり判定をチェックします
 			Ay = player.GetNextPosY();
-			Ax = player.GetPosX();
+			Ax = player.GetNextPosX();
 
 			//当たっているかチェック
 			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) {
@@ -183,7 +183,6 @@ void PLAY::MapCollision(int mapmove)
 			}
 		}
 	}
-
 	// X方向のみ当たり判定をチェックする
 	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
 	{

@@ -125,13 +125,11 @@ void Player::Draw()
 	//デバッグ
 	DrawFormatString(32, 32, GetColor(255, 0, 0), "%f, %f", m_posX, m_posY);
 
-	//プレイヤー実際の当たり判定
-	/*DrawBox(m_posX - 20, m_posY - 10, m_posX - 20 + PLAYER_WIDTH * 2, m_posY + PLAYER_HEIGHT * 2,
-		GetColor(255,255,255), true);*/
-
 	//プレイヤー画像
 	DrawRotaGraph(m_posX + PLAYER_W_R , m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
 
+	//プレイヤーｈｐ描画
+	DrawHp();
 }
 
 //終了処理
@@ -452,7 +450,7 @@ bool Player::PlayerInvincible()
 	//プレイヤー無敵
 	PlayerInviFlag = true;
 
-	//二秒たったら無敵解除
+	//1秒たったら無敵解除
 	if (PlayerInviFlame > 30)
 	{
 		//プレイヤー無敵出ない
@@ -463,4 +461,27 @@ bool Player::PlayerInvincible()
 	}
 
 	return PlayerInviFlag;
+}
+
+//Hp描画
+void Player::DrawHp()
+{
+	DrawBox(m_posX - 13, m_posY - 33, m_posX + 53, m_posY - 30, GetColor(255, 255, 255), true);
+	DrawBox(m_posX - 10, m_posY - 30, m_posX + m_HP / 2 , m_posY - 20, GetColor(0, 255, 0), true);
+	DrawBox(m_posX - 13, m_posY - 20, m_posX + 53, m_posY - 17, GetColor(255, 255, 255), true);
+
+
+}
+
+//プレイヤー死亡処理
+bool Player::DeathPlayer()
+{
+	if (m_HP > 0)
+	{
+		return false;
+	}
+	else if (m_HP <= 0)
+	{
+		return true;
+	}
 }
