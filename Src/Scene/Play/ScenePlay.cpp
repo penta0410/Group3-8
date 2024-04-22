@@ -13,6 +13,7 @@ void PLAY::Init()
 	player.Init();				//プレイヤーの初期化処理
 	player.DefaultValue();		//プレイヤーの初期値設定
 	m_map.Init();				//マップ初期化
+	effectInfo.InitEffect();	//エフェクト初期化
 
 	//背景座標
 	m_BG_x[0] = WINDOW_WIDTH/2;
@@ -35,8 +36,9 @@ void PLAY::Load()
 	m_ImageHandle[1] = LoadGraph(PLAY_PATH[1]);			//プレイ背景2
 	m_ImageHandle[2] = LoadGraph(PLAY_PATH[2]);			//コイン
 	
-	effectInfo.LoadEffect(EFFECT_TYPE_SHINE, 3);
-	
+	effectInfo.LoadEffect(EFFECT_TYPE_SHINE, 3);		//エフェクトキラキラ
+	effectInfo.LoadEffect(EFFECT_TYPE_RECOVERY, 3);		//エフェクト回復
+
 	//コイン座標
 	m_coin_x = 50;
 	m_coin_y = 50;
@@ -239,8 +241,9 @@ void PLAY::MapCollision(int mapmove)
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
+					effectInfo.PlayEffect(EFFECT_TYPE_RECOVERY, mapIndexX * MAP_SIZE - 10
+						+ m_BG_move_x, mapIndexY * MAP_SIZE + 10);
 					player.PlayerHeal();
-
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
@@ -318,8 +321,9 @@ void PLAY::MapCollision(int mapmove)
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
+					effectInfo.PlayEffect(EFFECT_TYPE_RECOVERY, mapIndexX* MAP_SIZE - 10
+						+ m_BG_move_x, mapIndexY* MAP_SIZE + 10);
 					player.PlayerHeal();
-
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
