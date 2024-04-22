@@ -143,6 +143,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				result.Init(play.GetCoin());
 				//ÉäÉUÉãÉgì«Ç›çûÇ›
 				result.Load();
+
+				result.Sound();
 			}   break;
 			case SCENE_ID_LOOP_RESULT:
 			{
