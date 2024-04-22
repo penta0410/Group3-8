@@ -17,6 +17,8 @@ const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 {
 	"Data/Play/BackGround.png",		//背景
 	"Data/Play/BackGround2.png",		//背景２
+	"Data/Play/coin.png",			//コイン
+
 };
 
 const char PLAY_SCENE_BGM[] = { "" };				//プレイシーンのBGM
@@ -40,6 +42,13 @@ private:
 	//背景移動量
 	int m_BG_move_x;
 
+	//コインUI座標
+	int m_coin_x;
+	int m_coin_y;
+
+	//獲得コイン保存変数
+	int m_CoinNum;
+
 public:
 
 	//初期化
@@ -57,5 +66,11 @@ public:
 	
 	//トラップ通常処理
 	void TrapStep();
+
+	//コインゲット
+	int GetCoin() { return m_CoinNum; };
+	//コインセット
+	void SetCoin(int num);
+
 };
 

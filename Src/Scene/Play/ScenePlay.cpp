@@ -32,7 +32,10 @@ void PLAY::Load()
 	m_ImageHandle[0] = LoadGraph(PLAY_PATH[0]);			//プレイ背景
 	m_ImageHandle[1] = LoadGraph(PLAY_PATH[1]);			//プレイ背景2
 	m_ImageHandle[2] = LoadGraph(PLAY_PATH[2]);			//コイン
-	m_ImageHandle[3] = LoadGraph(PLAY_PATH[3]);			//トラップ
+	
+	//コイン座標
+	m_coin_x = 50;
+	m_coin_y = 50;
 
 	player.Load();				//プレイヤーの読み込み
 
@@ -85,6 +88,15 @@ void PLAY::Draw()
 	m_map.Draw(-m_BG_move_x);	//マップ描画
 
 	player.Draw();				//プレイヤーの描画処理
+
+	//コイ描画
+	DrawRotaGraph(m_coin_x, m_coin_y, 0.8f, 1.0f, m_ImageHandle[2], true);
+
+	//コイン枚数描画
+	SetFontSize(36);
+	DrawFormatString(m_coin_x + 30, m_coin_y - 19, GetColor(255, 255, 255),
+		"X%d", m_CoinNum, true);
+	SetFontSize(16);
 
 	//デバッグ
 	SetFontSize(30);
@@ -172,6 +184,8 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
 				{
 					m_map.CoinStep(mapIndexX, mapIndexY);
+					m_CoinNum += 1;
+
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
@@ -238,6 +252,7 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
 				{
 					m_map.CoinStep(mapIndexX, mapIndexY);
+					m_CoinNum += 1;
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
@@ -272,7 +287,10 @@ void PLAY::TrapStep()
 			player.SetHp(hp);
 		}
 	}
-
 }
 
-
+//コインセット
+void PLAY::SetCoin(int num)
+{
+	m_CoinNum = num;
+}
