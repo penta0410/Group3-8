@@ -21,6 +21,12 @@ void RESULT::Init(int m_score)
 
 	m_NumposX = 840;
 	m_NumposY = 390;
+	
+	FreamCnt = 0;
+
+	m_Numalpha = 0;
+
+	IsScoreDrawFrag = false;
 
 	for (int i = 0; i < 10; i++) {
 		m_numberHandle[i] = 0;
@@ -56,16 +62,26 @@ void RESULT::Step()
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
 		IsMojiDraw = true;
-
-		IsSceneFlag = true;
 	}
-	if (IsMojiDraw)
-	{
+	
+	if(IsMojiDraw) {
 		if (m_alpha <= 200) {
 			m_alpha += 10;
 		}
 		else {
-			IsScoreDrawFrag = true;
+			FreamCnt++;
+			if (FreamCnt % 60 == 0) {
+				IsScoreDrawFrag = true;
+			}
+		}
+		if (IsScoreDrawFrag)
+		{
+			if (m_Numalpha <= 200) {
+				m_Numalpha += 2;
+			}
+			else {
+				IsSceneFlag = true;
+			}
 		}
 	}
 
@@ -74,39 +90,50 @@ void RESULT::Step()
 //描画処理
 void RESULT::Draw()
 {
-
-	DrawGraph(0, 0, ImageHandle, true);
-	
-	if (IsMojiDraw) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
-		DrawRotaGraph(m_moji_x + MOJI_X, m_moji_y + MOJI_Y, 1.0f, 0.0f, MojiHandle, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_alpha);
-	}
-
 	int count = 0;
 
 	int ItemScore = 0;
 
 	num = 0;
 
-	//スコアがゼロの時
-	if (score == 0) {
-		DrawRotaGraph(m_NumposX - count * 16, m_NumposY, 2.0f, 0.0f, m_numberHandle[0], true);
+
+	DrawGraph(0, 0, ImageHandle, true);
+
+	if (IsMojiDraw) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+		DrawRotaGraph(m_moji_x + MOJI_X, m_moji_y + MOJI_Y, 1.0f, 0.0f, MojiHandle, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_alpha);
+	}
+	if (IsScoreDrawFrag) {
+		//スコアがゼロの時
+		if (score == 0) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_Numalpha);
+			DrawRotaGraph(m_NumposX - count * 16, m_NumposY, 2.0f, 0.0f, m_numberHandle[0], true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_Numalpha);
+		}
+
+		//DrawFormatString(100, 100, GetColor(255, 0, 0), "%d", score);
+
+		ItemScore = score;
+
+		//スコアがゼロ以上の時
+		while (ItemScore > 0) {
+			num = ItemScore % 10;
+			ItemScore = ItemScore / 10;
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_Numalpha);
+			DrawRotaGraph(m_NumposX - count * 30, m_NumposY, 2.0f, 0.0f, m_numberHandle[num], true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_Numalpha);
+			count++;
+		}
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_Numalpha);
+		DrawRotaGraph(m_UI_Image_posX + UI_W_R, m_UI_Image_posY + UI_H_R, 1.0f, 0.785, m_numberHandle[num], true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_Numalpha);
 	}
 
-	//DrawFormatString(100, 100, GetColor(255, 0, 0), "%d", score);
 
-	ItemScore = score;
 
-	//スコアがゼロ以上の時
-	while (ItemScore > 0) {
-		num = ItemScore % 10;
-		ItemScore = ItemScore / 10;
-		DrawRotaGraph(m_NumposX - count * 16, m_NumposY, 2.0f, 0.0f,m_numberHandle[num], true);
-		count++;
-	}
-
-	DrawRotaGraph(m_UI_Image_posX + UI_W_R, m_UI_Image_posY + UI_H_R, 1.0f, 0.785, m_numberHandle[num], true);
+	
 
 	//デバッグ
 //	SetFontSize(30);
