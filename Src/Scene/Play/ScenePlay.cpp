@@ -91,7 +91,7 @@ void PLAY::Step()
 	player.UpdatePos();
 
 	//プレイヤーが死亡したら
-	if (player.DeathPlayer() == 1)
+	if (player.DeathPlayer() == true)
 	{
 		//シーンフラグをリザルトシーンに変更
 		m_SceneFlag = 0;

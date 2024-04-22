@@ -97,6 +97,7 @@ public:
 
 	//コインゲット
 	int GetCoin() { return m_CoinNum; };
+
 	//コインセット
 	void SetCoin(int num);
 
