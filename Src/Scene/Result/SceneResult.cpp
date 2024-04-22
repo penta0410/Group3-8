@@ -15,7 +15,7 @@ void RESULT::Init(int m_score)
 	IsMojiDraw = false;
 	IsSceneFlag = false;
 	IsScoreDrawFrag = false;
-
+	m_BgmHndl = -1;
 
 	score = m_score;
 
@@ -45,6 +45,12 @@ void RESULT::Load()
 	for (int i = 0; i < 10; i++) {
 		LoadDivGraph(RESULT_NUMBER_PATH, SCORE_NUMBER_MAX_NUM, SCORE_NUMBER_MAX_NUM, 1, 12, 24, m_numberHandle, false);
 	}
+
+	m_BgmHndl = LoadSoundMem(RESULT_BGM_PATH);
+}
+void RESULT::Sound()
+{
+	PlaySoundMem(m_BgmHndl, DX_PLAYTYPE_LOOP);
 }
 
 //’Êíˆ—
@@ -145,6 +151,9 @@ void RESULT::Draw()
 //Œãˆ—
 void RESULT::Fin()
 {
+
+	//íœ
+	DeleteSoundMem(m_BgmHndl);
 
 	//SceneFlag‚ª0‚ÌŽž
 	if (m_SceneFlag == 0)

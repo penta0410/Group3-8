@@ -47,7 +47,7 @@ void TITLE::Load()
 	m_EnterHndl = LoadGraph(TITLE_ENTER_PATH);
 }
 
-void TITLE::PlayTitleMusic()
+void TITLE::Sound()
 {
 	PlaySoundMem(m_BGMHndl, DX_PLAYTYPE_LOOP);
 }

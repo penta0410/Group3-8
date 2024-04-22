@@ -68,7 +68,7 @@ public:
 	//ƒ[ƒh
 	void Load() override;
 	//‰¹Šy‚ğ—¬‚·
-	void PlaySound
+	void Sound();
 	//’Êíˆ—
 	void Step()	override;
 	//•`‰æˆ—

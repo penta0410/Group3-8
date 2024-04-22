@@ -22,6 +22,8 @@ void PLAY::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
+	m_PlayBgmHndl = -1;
+
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
 }
@@ -43,6 +45,13 @@ void PLAY::Load()
 
 	player.Load();				//プレイヤーの読み込み
 
+	m_PlayBgmHndl = LoadSoundMem(PLAY_BGM_PATH);
+
+}
+
+void PLAY::Sound()
+{
+	PlaySoundMem(m_PlayBgmHndl, DX_PLAYTYPE_LOOP);
 }
 
 //通常処理
@@ -132,6 +141,8 @@ void PLAY::Draw()
 //後処理
 void PLAY::Fin()
 {
+	DeleteSoundMem(m_PlayBgmHndl);
+
 	//SceneFlagが0の時
 	if (m_SceneFlag == 0)
 	{

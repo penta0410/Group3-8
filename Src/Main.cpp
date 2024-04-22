@@ -86,7 +86,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				//タイトル初期化
 				title.Init();
 				title.Load();
-				title.PlayTitleMusic();
+				title.Sound();
 			}	break;
 			case SCENE_ID_LOOP_TITLE:
 			{
@@ -122,6 +122,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				//プレイ初期化  
 				play.Init();
 				play.Load();
+				play.Sound();
+
 			}	break;
 			case SCENE_ID_LOOP_PLAY:
 			{

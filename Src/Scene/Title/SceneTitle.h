@@ -34,7 +34,7 @@ public:
 	void Fin() override;
 
 	//‰¹Šy‚ğ—¬‚·‚¾‚¯‚Ìˆ—
-	void PlayTitleMusic();
+	void Sound();
 
 };
 
