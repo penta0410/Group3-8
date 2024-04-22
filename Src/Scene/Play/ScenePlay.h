@@ -12,6 +12,7 @@
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
+const char PLAY_BGM_PATH[] = { "Data/Sound/Play/PlayBGM.mp3" };			//プレイシーンのBGM
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
@@ -57,6 +58,8 @@ private:
 	//数字文字数
 	int m_numberHandle[10];
 	int num;
+
+	int PlayBgmHndl;
 
 public:
 
