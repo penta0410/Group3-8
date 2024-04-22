@@ -79,8 +79,6 @@ void Player::DefaultValue()
 
 	SpeedFreamCnt = 0;					//プレイヤーのスピードアップ用フレームカウント
 
-	CoinNum = 0;
-
 	//HP
 	m_HP = 100;
 
