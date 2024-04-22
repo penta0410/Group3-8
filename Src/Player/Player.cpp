@@ -29,10 +29,16 @@ void Player::Init()
 	PlayerUpSeedTime = 0;
 
 	//HP
-	m_HP = 0.0f;
+	m_HP = 0;
 
 	//SE
 	m_PlayerDashSE = -1;
+
+	//プレイヤー無敵フラグ
+	PlayerInviFlag = false;
+
+	//プレイヤー無敵フレーム
+    PlayerInviFlame = 0;
 
 	//重力フラグ
 	isGravity = false;
@@ -72,7 +78,10 @@ void Player::DefaultValue()
 	SpeedFreamCnt = 0;					//プレイヤーのスピードアップ用フレームカウント
 
 	//HP
-	m_HP = 1.0f;
+	m_HP = 100;
+
+	//プレイヤー無敵フラグ
+	PlayerInviFlag = false;
 
 	//重力フラグ
 	isGravity = false;
@@ -426,4 +435,32 @@ void Player::PlaySoundDashSE()
 void Player::UpdatePos() {
 	m_posX = m_nextPosX;
 	m_posY = m_nextPosY;
+}
+
+//Hｐセット
+void Player::SetHp(int hp)
+{
+	m_HP = hp;
+}
+
+//プレイヤー無敵かどうか
+bool Player::PlayerInvincible()
+{
+	//プレイヤー無敵フレーム
+	PlayerInviFlame++;
+
+	//プレイヤー無敵
+	PlayerInviFlag = true;
+
+	//二秒たったら無敵解除
+	if (PlayerInviFlame > 30)
+	{
+		//プレイヤー無敵出ない
+		PlayerInviFlag = false;
+
+		//フレーム初期化
+		PlayerInviFlame = 0;
+	}
+
+	return PlayerInviFlag;
 }

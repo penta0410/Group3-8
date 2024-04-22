@@ -69,6 +69,9 @@ void PLAY::Step()
 	//コイン当たり判定
 	CoinCollision(-m_BG_move_x);
 
+	//トラップ当たり判定
+	TrapCollision(-m_BG_move_x);
+
 	//プレイヤーの座標を更新
 	player.UpdatePos();
 
@@ -93,13 +96,16 @@ void PLAY::Draw()
 
 	m_map.Draw(-m_BG_move_x);	//マップ描画
 
-	player.Draw();				//プレイヤーの描画処理
-
 	//コイン
 	DrawCoin(m_BG_move_x);
 
 	//トラップ
 	DrawTrap(m_BG_move_x);
+
+	player.Draw();				//プレイヤーの描画処理
+
+	//Hp
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", player.GetHp(), true);
 
 	//デバッグ
 	SetFontSize(30);
@@ -295,5 +301,25 @@ void PLAY::DrawTrap(int mapmove)
 //トラップ当たり判定
 void PLAY::TrapCollision(int mapmove)
 {
+	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
+	{
+		//プレイヤーが無敵状態じゃなかったら
+		if (player.PlayerInvincible() == false)
+		{
+			//当たっているかチェック
+			if (IsHitRect(player.GetPosX() - 20, player.GetPosY() - 10, PLAYER_WIDTH * 2,
+				PLAYER_HEIGHT * 2, m_trap_x[trap_num] - 33 - mapmove, m_trap_y[trap_num] - 40,
+				65, 80))
+			{
+				//ｈｐゲット
+				int hp = player.GetHp();
 
+				//トラップ当たったらｈｐ現象
+				hp = hp - TRAP_DAMAGE;
+
+				//hpセット
+				player.SetHp(hp);
+			}
+		}
+	}
 }

@@ -17,6 +17,9 @@ const int COIN_NUM = 5;
 //トラップ数
 const int TRAP_NUM = 5;
 
+//トラップダメージ
+const int TRAP_DAMAGE = 10;
+
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
 {

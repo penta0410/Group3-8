@@ -23,7 +23,6 @@ const int PLAYER_Y_SPEED = 14;										//プレイヤーのYスピード
 const int PLAYER_IMG_TOTAL_NUM = 12;									//プレイヤーの画像総数
 const int PLAYER_IMG_X_NUM = 3;											//プレイヤーの横の枚数
 const int PLAYER_IMG_Y_NUM = 4;											//プレイヤーの縦の枚数
-
 const int PLAYER_FREAM_CNT = 60;										//1秒カウント
 const int PLAYER_SPEED_UP_TIME = 10;									//時間カウントするやつ
 
@@ -116,6 +115,12 @@ private:
 	//プレイヤー速さをあげるまでの時間
 	int PlayerUpSeedTime;
 
+	//プレイヤー無敵フラグ
+	bool PlayerInviFlag;
+
+	//プレイヤー無敵フレーム
+	int PlayerInviFlame;
+
 	//プレイヤーアニメーション種類
 	PlayerAnimationType now_animation;
 
@@ -151,6 +156,11 @@ public:
 	
 	//重力を与える
 	void Gravity();
+
+	//Hp取得
+	int GetHp() { return m_HP; }
+	//Hｐセット
+	void SetHp(int hp);
 
 	//座標取得
 	float GetPosX() { return m_posX; }		//X座標
@@ -192,6 +202,8 @@ public:
 	//プレイヤーが走っていたらダッシュSEを流す
 	void PlaySoundDashSE();
 
+	//プレイヤー無敵かどうか
+	bool PlayerInvincible();
 
 };
 
