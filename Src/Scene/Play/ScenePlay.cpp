@@ -96,14 +96,34 @@ void PLAY::Draw()
 	//コイ描画
 	DrawRotaGraph(m_coin_x, m_coin_y, 0.8f, 1.0f, m_ImageHandle[2], true);
 
+	int count = 0;
+
+	int ItemScore = 0;
+
+	num = 0;
 	//コイン枚数描画
 	SetFontSize(36);
-	DrawFormatString(m_coin_x + 30, m_coin_y - 19, GetColor(255, 255, 255),
-		"X%d", m_CoinNum, true);
+
+	//スコアがゼロの時
+	if (m_CoinNum == 0) {
+		DrawFormatString(m_coin_x + 50, m_coin_y - 20, GetColor(255, 255, 255),"X", true);
+		DrawRotaGraph(m_coin_x + 150, m_coin_y, 1.8f, 0.0f, m_numberHandle[0], true);
+	}
+
+
+	ItemScore = m_CoinNum;
+
+	//スコアがゼロ以上の時
+	while (ItemScore > 0) {
+		num = ItemScore % 10;
+		ItemScore = ItemScore / 10;
+		//コイン枚数描画
+		DrawFormatString(m_coin_x + 50, m_coin_y - 20, GetColor(255, 255, 255), "X", true);
+		DrawRotaGraph(m_coin_x - count * 25 + 150, m_coin_y, 1.8f, 0.0f, m_numberHandle[num], true);
+		count++;
+	}
 	SetFontSize(16);
 
-	DrawRotaGraph(m_coin_x + 30, m_coin_y - 18, 1.0f, 0.0f, MojiHandle, true);
-	
 	//デバッグ
 	SetFontSize(30);
 	SetFontSize(16);

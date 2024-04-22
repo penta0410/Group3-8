@@ -53,11 +53,10 @@ private:
 
 	//文字フォントハンドル
 	int MojiHandle;
-	//文字フォント描画フラグ
-	bool IsMojiDraw;
 
 	//数字文字数
 	int m_numberHandle[10];
+	int num;
 
 public:
 

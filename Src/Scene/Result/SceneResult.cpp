@@ -16,6 +16,7 @@ void RESULT::Init(int m_score)
 	IsSceneFlag = false;
 	IsScoreDrawFrag = false;
 
+
 	score = m_score;
 
 	m_NumposX = 840;
