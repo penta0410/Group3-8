@@ -122,8 +122,8 @@ void Player::Step()
 //描画処理
 void Player::Draw()
 {
-	//デバッグ
-	DrawFormatString(32, 32, GetColor(255, 0, 0), "%f, %f", m_posX, m_posY);
+	////デバッグ
+	//DrawFormatString(32, 32, GetColor(255, 0, 0), "%f, %f", m_posX, m_posY);
 
 	//プレイヤー画像
 	DrawRotaGraph(m_posX + PLAYER_W_R , m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
@@ -150,32 +150,6 @@ void Player::Move()
 	m_nextPosX = m_posX;
 	m_nextPosY = m_posY;
 
-	
-
-	////プレイヤーが横に移動し続ける
-	//m_posX += m_move_x;
-
-	////フレームカウントが60になったとき
-	//if (SpeedFreamCnt >= PLAYER_FREAM_CNT)
-	//{
-	//	//一秒経過させる
-	//	PlayerUpSeedTime += 1;
-
-	//	//0に戻す
-	//	SpeedFreamCnt = 0;
-	//}
-	////10秒経過したら
-	//if (PlayerUpSeedTime >= PLAYER_SPEED_UP_TIME)
-	//{
-	//	//プレイヤーのスピードを少しあげる
-	//	m_move_x += 0.1;
-
-	//	//0に戻す
-	//	PlayerUpSeedTime = 0;
-	//}
-
-	
-
 }
 
 //操作処理
@@ -183,8 +157,6 @@ void Player::Control()
 {
 	m_nextPosX = m_posX;
 	m_nextPosY = m_posY;
-
-
 
 	//ジャンプ処理
 	if (IsKeyPush(KEY_INPUT_SPACE))
@@ -203,54 +175,6 @@ void Player::Control()
 			}
 		}
 	}
-
-
-
-	//デバッグ(当たり判定)===============
-	//横移動処理
-	////左
-	//if (CheckHitKey(KEY_INPUT_A) == 1)
-	//{
-	//	//歩き
-	//	m_move_x = -5;
-	//	m_nextPosX -= 5;
-
-	//}
-
-	////右
-	//if (CheckHitKey(KEY_INPUT_D) == 1)
-	//{
-	//	//歩き
-	//	m_move_x = 5;
-	//	m_nextPosX += 5;
-
-	//}
-
-	////下
-	//if (CheckHitKey(KEY_INPUT_S) == 1)
-	//{
-	//	//歩き
-	//	m_move_y = 5;
-	//	m_nextPosY += 5;
-
-	//}
-
-	////上
-	//if (CheckHitKey(KEY_INPUT_W) == 1)
-	//{
-	//	//歩き
-	//	m_move_y = 5;
-	//	m_nextPosY -= 5;
-
-	//	//空中にいなければ歩くアニメーション
-	//	if (!IsAirPlayer())
-	//	{
-	//		state = PLAYER_STATE_RUN;
-	//	}
-
-	//}
-	//==========================================
-
 }
 
 //アニメーション
@@ -451,7 +375,7 @@ bool Player::PlayerInvincible()
 	PlayerInviFlag = true;
 
 	//1秒たったら無敵解除
-	if (PlayerInviFlame > 30)
+	if (PlayerInviFlame > 60)
 	{
 		//プレイヤー無敵出ない
 		PlayerInviFlag = false;
@@ -469,7 +393,8 @@ void Player::DrawHp()
 	DrawBox(m_posX - 13, m_posY - 33, m_posX + 53, m_posY - 30, GetColor(255, 255, 255), true);
 	DrawBox(m_posX - 10, m_posY - 30, m_posX + m_HP / 2 , m_posY - 20, GetColor(0, 255, 0), true);
 	DrawBox(m_posX - 13, m_posY - 20, m_posX + 53, m_posY - 17, GetColor(255, 255, 255), true);
-
+	DrawBox(m_posX - 13, m_posY - 33, m_posX - 10, m_posY - 17, GetColor(255, 255, 255), true);
+	DrawBox(m_posX + 50, m_posY - 33, m_posX + 53, m_posY - 17, GetColor(255, 255, 255), true);
 
 }
 

@@ -22,12 +22,6 @@ void PLAY::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
-	//コイン初期化
-	InitCoin();
-	
-	//トラップ初期化
-	InitTrap();
-
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
 }
@@ -66,12 +60,6 @@ void PLAY::Step()
 	//マップの当たり判定
 	MapCollision(-m_BG_move_x);
 
-	//コイン当たり判定
-	CoinCollision(-m_BG_move_x);
-
-	//トラップ当たり判定
-	TrapCollision(-m_BG_move_x);
-
 	//プレイヤーの座標を更新
 	player.UpdatePos();
 
@@ -96,16 +84,7 @@ void PLAY::Draw()
 
 	m_map.Draw(-m_BG_move_x);	//マップ描画
 
-	//コイン
-	DrawCoin(m_BG_move_x);
-
-	//トラップ
-	DrawTrap(m_BG_move_x);
-
 	player.Draw();				//プレイヤーの描画処理
-
-	//Hp
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", player.GetHp(), true);
 
 	//デバッグ
 	SetFontSize(30);
@@ -134,7 +113,9 @@ void PLAY::MapCollision(int mapmove)
 		{
 			//ブロック以外は処理しない
 			if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == MAPCHIP_NONE)
+			{
 				continue;
+			}
 
 			//どの方向に進んでいたかチェック
 			bool dirArray[4] = { false,false,false,false };
@@ -160,29 +141,47 @@ void PLAY::MapCollision(int mapmove)
 			//当たっているかチェック
 			if (IsHitRect(Ax + mapmove, Ay, Aw, Ah, Bx + mapmove, By, Bw, Bh)) {
 
-				// 上方向の修正
-				if (dirArray[0]) {
-					// めり込み量を計算する
-					int overlap = By + Bh - Ay;
-					player.SetNextPosY(Ay + overlap);
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 7)
+				{
+					if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
+					{
+						// 上方向の修正
+						if (dirArray[0]) {
+							// めり込み量を計算する
+							int overlap = By + Bh - Ay;
+							player.SetNextPosY(Ay + overlap);
 
-					//天井についたら押し返す
-					player.PlayerCeiling();
+							//天井についたら押し返す
+							player.PlayerCeiling();
 
+						}
+						//下方向の修正
+						if (dirArray[1]) {
+							// めり込み量を計算する
+							int overlap = Ay + Ah - By;
+							player.SetNextPosY(Ay - overlap);
+
+							//落下したら
+							player.PlayerLanding();
+
+						}
+					}
 				}
-				//下方向の修正
-				if (dirArray[1]) {
-					// めり込み量を計算する
-					int overlap = Ay + Ah - By;
-					player.SetNextPosY(Ay - overlap);
 
-					//落下したら
-					player.PlayerLanding();
-
+				//コイン処理
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
+				{
+					m_map.CoinStep(mapIndexX, mapIndexY);
+				}
+				//トラップ処理
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
+				{
+					TrapStep();
 				}
 			}
 		}
 	}
+
 	// X方向のみ当たり判定をチェックする
 	for (int mapIndexY = 0; mapIndexY < MAP_DATA_Y; mapIndexY++)
 	{
@@ -215,110 +214,65 @@ void PLAY::MapCollision(int mapmove)
 			// 当たっているかチェック
 			if (IsHitRect(Ax, Ay, Aw, Ah, Bx, By, Bw, Bh)) {
 
-				// 左方向の修正
-				if (dirArray[2]) {
-					// めり込み量を計算する
-					int overlap = Bx + Bw - Ax;
-					player.SetNextPosX(Ax + overlap);
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 7)
+				{
+					if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
+					{
+						// 左方向の修正
+						if (dirArray[2]) {
+							// めり込み量を計算する
+							int overlap = Bx + Bw - Ax;
+							player.SetNextPosX(Ax + overlap);
+						}
+
+						// 右方向の修正
+						if (dirArray[3]) {
+							// めり込み量を計算する
+							int overlap = Ax + Aw - Bx;
+							player.SetNextPosX(Ax - overlap);
+						}
+					}
 				}
-				// 右方向の修正
-				if (dirArray[3]) {
-					// めり込み量を計算する
-					int overlap = Ax + Aw - Bx;
-					player.SetNextPosX(Ax - overlap);
+
+				//コイン処理
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
+				{
+					m_map.CoinStep(mapIndexX, mapIndexY);
+				}
+				//トラップ処理
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
+				{
+					TrapStep();
 				}
 			}
 		}
 	}
 }
 
-//コイン座標初期化
-void PLAY::InitCoin()
+//トラップ通常処理
+void PLAY::TrapStep()
 {
-	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
+	//プレイヤーが無敵状態じゃなかったら
+	if (player.PlayerInvincible() == false)
 	{
-		m_coin_x[coin_num] = COIN_PLACE[coin_num][0];
-		m_coin_y[coin_num] = COIN_PLACE[coin_num][1];
-		CoinFlag[coin_num] = 1;
-	}
-}
+		//ｈｐゲット
+		int hp = player.GetHp();
 
-//コイン当たり判定
-void PLAY::CoinCollision(int mapmove)
-{
-	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
-	{
-		//コインが描画されていたら
-		if (CoinFlag[coin_num] == 1)
+		if (hp > 0)
 		{
-			//当たっているかチェック
-			if (IsHitRect(player.GetPosX() - 20, player.GetPosY() - 10, PLAYER_WIDTH * 2,
-				PLAYER_HEIGHT * 2, m_coin_x[coin_num] - 25 - mapmove, m_coin_y[coin_num] - 24,
-				50, 48))
-			{
-				//コイン描画フラグoff
-				CoinFlag[coin_num] = 0;
+			//トラップ当たったらｈｐ現象
+			hp = hp - TRAP_DAMAGE;
 
-			}
+			//hpセット
+			player.SetHp(hp);
+		}
+		else if (hp <= 0)
+		{
+			hp = 0;
+			player.SetHp(hp);
 		}
 	}
+
 }
 
-//コイン描画
-void PLAY::DrawCoin(int mapmove)
-{
-	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
-	{
-		if (CoinFlag[coin_num] == 1)
-		{
-			DrawRotaGraph(m_coin_x[coin_num] + mapmove, m_coin_y[coin_num], 1.0f, 0.0f, m_ImageHandle[2], true);
-		}
-	}
-}
 
-//トラップ座標初期化
-void PLAY::InitTrap()
-{
-	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
-	{
-		m_trap_x[trap_num] = TRAP_PLACE[trap_num][0];
-		m_trap_y[trap_num] = TRAP_PLACE[trap_num][1];
-	}
-}
-
-//トラップ描画
-void PLAY::DrawTrap(int mapmove)
-{
-	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
-	{
-
-		DrawRotaGraph(m_trap_x[trap_num] + mapmove, m_trap_y[trap_num], 1.0f, 0.0f, m_ImageHandle[3], true);
-
-	}
-}
-
-//トラップ当たり判定
-void PLAY::TrapCollision(int mapmove)
-{
-	for (int trap_num = 0; trap_num < TRAP_NUM; trap_num++)
-	{
-		//プレイヤーが無敵状態じゃなかったら
-		if (player.PlayerInvincible() == false)
-		{
-			//当たっているかチェック
-			if (IsHitRect(player.GetPosX() - 20, player.GetPosY() - 10, PLAYER_WIDTH * 2,
-				PLAYER_HEIGHT * 2, m_trap_x[trap_num] - 33 - mapmove, m_trap_y[trap_num] - 40,
-				65, 80))
-			{
-				//ｈｐゲット
-				int hp = player.GetHp();
-
-				//トラップ当たったらｈｐ現象
-				hp = hp - TRAP_DAMAGE;
-
-				//hpセット
-				player.SetHp(hp);
-			}
-		}
-	}
-}

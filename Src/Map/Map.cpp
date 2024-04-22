@@ -15,27 +15,29 @@ void Map::Init() {
 	imgHundle[MAPCHIP_KAGI] = LoadGraph("Data/Play/図11.png");		//鍵
 	imgHundle[MAPCHIP_KAGIBLOCK] = LoadGraph("Data/Play/図10.png");	//鍵ブロック
 	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/Play/図51.png");	//木箱
-
+	imgHundle[MAPCHIP_COIN] = LoadGraph("Data/Play/coin.png");	//コイン
+	imgHundle[MAPCHIP_TRAP] = LoadGraph("Data/Play/Trap.png");	//トラップ
 
 	ReadFile();
 	isReadFile = true;
-	isReadFile2 = true;
-
+	
 	//ファイル１読み込み終了フラグ
 	ReadFileFlag_1 = 0;
-	//ファイル2読み込み終了フラグ
-	ReadFileFlag_2 = 1;
-
+	
 	//マップチップ描画フラグ
 	DrawFlag_1 = 0;
-	DrawFlag_2 = 1;
+
+	//初期化
+	for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
+	{
+		CoinFlag[coin_num] = 1;
+	}
 
 	increase = 1;
 }
 
 void Map::Draw(int mapmove) {
 
-	
 	for (int y = 0; y < MAP_DATA_Y; y++)
 	{
 		for (int x = 0; x < MAP_DATA_X; x++)
@@ -45,44 +47,25 @@ void Map::Draw(int mapmove) {
 				int mapchipType = m_FileReadMapData[y][x];
 				if (m_FileReadMapData[y][x] != MAPCHIP_NONE) {
 					move = x * MAP_SIZE - mapmove;
-					DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-
-					if (move <= -11100)
+					if (m_FileReadMapData[y][x] != 7)
 					{
-						move = x * MAP_SIZE - mapmove + 11200 * 2;
+						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 					}
-					
+
+					for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
+					{
+						if (CoinFlag[coin_num] == 1)
+						{
+							if (m_FileReadMapData[y][x] == 7)
+							{
+								DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+							}
+						}
+					}
 				}
 			}
 		}
 	}
-
-	for (int y = 0; y < MAP_DATA_Y; y++)
-	{
-		for (int x = 0; x < MAP_DATA_X; x++)
-		{
-			if (isReadFile2)
-			{
-				int mapchipType = m_FileReadMapData[y][x];
-				if (m_FileReadMapData2[y][x] != MAPCHIP_NONE) {
-					move_2 = x * MAP_SIZE - mapmove + 11200;
-					DrawGraph(move_2, y * MAP_SIZE, imgHundle[mapchipType], true);
-
-					if (move_2 <= -11100)
-					{
-						move_2 = x * MAP_SIZE - mapmove + 11200 * 2;
-						
-					}
-
-				}
-			}
-		}
-	}
-	
-
-	
-	
-
 }
 
 //通常処理
@@ -91,14 +74,16 @@ void Map::Step()
 
 }
 
-//コインブロック処理
-void Map::Koin()
+//コイン通常処理
+void Map::CoinStep(int x, int y)
 {
-	if (m_FileReadMapData[7][4])
+	if (m_FileReadMapData[y][x] == 7)
 	{
-		m_FileReadMapData[7][4] = 3;
+		m_FileReadMapData[y][x] = -1;
 	}
 }
+
+
 
 // ファイルからの読み込み
 void Map::ReadFile() {
@@ -134,37 +119,6 @@ void Map::ReadFile() {
 
 
 
-	fclose(fp);
-
-	FILE* fp_2;
-	fopen_s(&fp_2, "Data/Play/map2.csv", "r");
-
-	int mapIndexX_2 = 0;
-	int mapIndexY_2 = 0;
-
-	while (true) {
-		// 数値部分を読み込む
-		fscanf_s(fp_2, "%d", &m_FileReadMapData2[mapIndexY_2][mapIndexX_2]);
-		mapIndexX_2++;
-
-		// 「,」を飛ばすために読み込みを実行
-		char map = fgetc(fp_2);
-
-		// EOFの場合は読み込み終了
-		if (map == EOF)
-		{
-			break;
-		}
-
-		// 改行コードの場合は保存先を変更する
-		if (map == '\n')
-		{
-			mapIndexY_2++;
-			mapIndexX_2 = 0;
-		}
-	}
-
-	fclose(fp_2);
-
+	
 }
 
