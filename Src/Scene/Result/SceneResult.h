@@ -35,8 +35,10 @@ private:
 	int m_UI_Image_posX;
 	int m_UI_Image_posY;
 	int num;
+	int FreamCnt;
 
 	int m_alpha;
+	int m_Numalpha;
 
 	bool IsMojiDraw;
 	bool IsSceneFlag;			//シーン遷移できるかどうかのフラグ
