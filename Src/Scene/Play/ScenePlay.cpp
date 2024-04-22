@@ -35,6 +35,8 @@ void PLAY::Load()
 	m_ImageHandle[1] = LoadGraph(PLAY_PATH[1]);			//プレイ背景2
 	m_ImageHandle[2] = LoadGraph(PLAY_PATH[2]);			//コイン
 	
+	effectInfo.LoadEffect(EFFECT_TYPE_SHINE, 3);
+	
 	//コイン座標
 	m_coin_x = 50;
 	m_coin_y = 50;
@@ -58,6 +60,7 @@ void PLAY::Sound()
 void PLAY::Step()
 {	
 	player.Step();				//プレイヤーの通常処理
+	effectInfo.StepEffect();		//エフェクト通常処理
 
 	//背景スクロール処理
 	m_BG_x[0] -= PLAYER_SPEED;
@@ -102,6 +105,8 @@ void PLAY::Draw()
 
 	player.Draw();				//プレイヤーの描画処理
 
+	effectInfo.DrawEffect();
+
 	//コイ描画
 	DrawRotaGraph(m_coin_x, m_coin_y, 0.8f, 1.0f, m_ImageHandle[2], true);
 
@@ -110,18 +115,15 @@ void PLAY::Draw()
 	int ItemScore = 0;
 
 	num = 0;
+
 	//コイン枚数描画
 	SetFontSize(36);
-
 	//スコアがゼロの時
 	if (m_CoinNum == 0) {
 		DrawFormatString(m_coin_x + 50, m_coin_y - 20, GetColor(255, 255, 255),"X", true);
 		DrawRotaGraph(m_coin_x + 150, m_coin_y, 1.8f, 0.0f, m_numberHandle[0], true);
 	}
-
-
 	ItemScore = m_CoinNum;
-
 	//スコアがゼロ以上の時
 	while (ItemScore > 0) {
 		num = ItemScore % 10;
@@ -223,9 +225,11 @@ void PLAY::MapCollision(int mapmove)
 				//コイン処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
 				{
+					effectInfo.PlayEffect(EFFECT_TYPE_SHINE, mapIndexX * MAP_SIZE -10
+						+ m_BG_move_x, mapIndexY * MAP_SIZE + 10);
 					m_map.CoinStep(mapIndexX, mapIndexY);
 					m_CoinNum += 1;
-
+					
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
@@ -303,6 +307,8 @@ void PLAY::MapCollision(int mapmove)
 				{
 					m_map.CoinStep(mapIndexX, mapIndexY);
 					m_CoinNum += 1;
+					effectInfo.PlayEffect(EFFECT_TYPE_SHINE, mapIndexX* MAP_SIZE - 10
+						+ m_BG_move_x, mapIndexY* MAP_SIZE + 10);
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)

@@ -13,7 +13,7 @@ enum EFFECT_TYPE
 };
 
 //一度に表示できるエフェクト最大数
-#define EFFECT_MAX_NUM		(10)
+#define EFFECT_MAX_NUM		(4)
 
 //エフェクトのアニメ最大数
 #define EFFECT_ANIME_MAX_NUM	(4)	
