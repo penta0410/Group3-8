@@ -16,7 +16,7 @@ void RESULT::Init()
 	IsSceneFlag = false;
 	IsScoreDrawFrag = false;
 
-	score = player.GetCoinNum();
+	score = 100;
 	m_NumposX = 840;
 	m_NumposY = 390;
 
