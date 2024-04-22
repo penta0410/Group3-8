@@ -47,7 +47,7 @@ private:
 public:
 
 	//‰Šú‰»
-	void Init() override;
+	void Init(int m_score);
 	//ƒ[ƒh
 	void Load() override;
 	//’Êíˆ—

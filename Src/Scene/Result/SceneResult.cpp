@@ -4,7 +4,7 @@
 #include "../../Collision/Collision.h"
 
 //èâä˙âª
-void RESULT::Init()
+void RESULT::Init(int m_score)
 {
 	ImageHandle = -1;
 	MojiHandle	= -1;
@@ -16,7 +16,8 @@ void RESULT::Init()
 	IsSceneFlag = false;
 	IsScoreDrawFrag = false;
 
-	score = player.GetCoinNum();
+	score = m_score;
+
 	m_NumposX = 840;
 	m_NumposY = 390;
 

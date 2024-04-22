@@ -37,6 +37,10 @@ void PLAY::Load()
 	m_coin_x = 50;
 	m_coin_y = 50;
 
+	for (int i = 0; i < 10; i++) {
+		LoadDivGraph(RESULT_NUMBER_PATH, SCORE_NUMBER_MAX_NUM, SCORE_NUMBER_MAX_NUM, 1, 12, 24, m_numberHandle, false);
+	}
+
 	player.Load();				//プレイヤーの読み込み
 
 }
@@ -98,6 +102,8 @@ void PLAY::Draw()
 		"X%d", m_CoinNum, true);
 	SetFontSize(16);
 
+	DrawRotaGraph(m_coin_x + 30, m_coin_y - 18, 1.0f, 0.0f, MojiHandle, true);
+	
 	//デバッグ
 	SetFontSize(30);
 	SetFontSize(16);

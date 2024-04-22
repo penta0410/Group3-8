@@ -8,6 +8,7 @@
 #include "../../Input/Input.h"
 #include "../../Screen/Screen.h"
 #include "../../Map/Map.h"
+#include "../Result/SceneResult.h"
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
@@ -31,6 +32,7 @@ private:
 	Player player;			//プレイヤークラス
 	Screen m_screen;		//スクリーンクラス
 	Map m_map;				//マップクラス
+	RESULT m_result;
 
 	//画像ハンドル
 	int m_ImageHandle[PLAY_IMAGE_PATH_NUM];
@@ -48,6 +50,14 @@ private:
 
 	//獲得コイン保存変数
 	int m_CoinNum;
+
+	//文字フォントハンドル
+	int MojiHandle;
+	//文字フォント描画フラグ
+	bool IsMojiDraw;
+
+	//数字文字数
+	int m_numberHandle[10];
 
 public:
 

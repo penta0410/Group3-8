@@ -136,7 +136,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			case SCENE_ID_INIT_RESULT:
 			{
 				//リザルト初期化  
-				result.Init();
+				result.Init(play.GetCoin());
 				//リザルト読み込み
 				result.Load();
 			}   break;
