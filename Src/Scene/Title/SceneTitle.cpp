@@ -28,11 +28,11 @@ void TITLE::Load()
 void TITLE::Step()
 {
 
-	//メインメニューシーンへの遷移
+	//プレイシーンへの遷移
 	//Enterキー押されたなら
 	if (IsKeyPush(KEY_INPUT_RETURN))
 	{
-		//シーンフラグをメインメニューシーンに変更
+		//シーンフラグをプレイシーンに変更
 		m_SceneFlag = 0;
 		//タイトル後処理へ移動
 		g_CurrentSceneID = SCENE_ID_FIN_TITLE;
@@ -58,7 +58,7 @@ void TITLE::Fin()
 	if (m_SceneFlag == 0)
 	{
 		//INITへ移動
-		g_CurrentSceneID = SCENE_ID_INIT_MEIN_MENU;
+		g_CurrentSceneID = SCENE_ID_INIT_PLAY;
 	}
 }
 
