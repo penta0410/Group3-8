@@ -50,6 +50,7 @@ void RESULT::Load()
 }
 void RESULT::Sound()
 {
+	ChangeVolumeSoundMem(150, m_BgmHndl);
 	PlaySoundMem(m_BgmHndl, DX_PLAYTYPE_LOOP);
 }
 
