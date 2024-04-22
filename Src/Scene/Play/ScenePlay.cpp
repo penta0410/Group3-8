@@ -23,7 +23,10 @@ void PLAY::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
-	m_PlayBgmHndl = -1;
+	for (int i = 0; i < PLAY_SOUND_PATH_NUM; i++)
+	{
+		m_PlayBgmHndl[i] = -1;
+	}
 
 	//プレイループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_PLAY;
@@ -49,13 +52,16 @@ void PLAY::Load()
 
 	player.Load();				//プレイヤーの読み込み
 
-	m_PlayBgmHndl = LoadSoundMem(PLAY_BGM_PATH);
-
+	//ｂｇｍ、SE 読み込み
+	for (int i = 0; i < PLAY_SOUND_PATH_NUM; i++)
+	{
+		m_PlayBgmHndl[i] = LoadSoundMem(PLAY_BGM_PATH[i]);
+	}
 }
 
 void PLAY::Sound()
 {
-	PlaySoundMem(m_PlayBgmHndl, DX_PLAYTYPE_LOOP);
+	PlaySoundMem(m_PlayBgmHndl[0], DX_PLAYTYPE_LOOP);
 }
 
 //通常処理
@@ -84,9 +90,8 @@ void PLAY::Step()
 	//プレイヤーの座標を更新
 	player.UpdatePos();
 
-	//リザルトシーンへの遷移
-	//Enterキー押されたなら
-	if (IsKeyPush(KEY_INPUT_RETURN))
+	//プレイヤーが死亡したら
+	if (player.DeathPlayer() == 1)
 	{
 		//シーンフラグをリザルトシーンに変更
 		m_SceneFlag = 0;
@@ -94,6 +99,17 @@ void PLAY::Step()
 		g_CurrentSceneID = SCENE_ID_FIN_PLAY;
 	}
 
+	//デバッグ(死亡できなかった時のため)=============================
+	//リザルトシーンへの遷移
+	//Enterキー & 左シフト押されたなら
+	if (IsKeyPush(KEY_INPUT_RETURN) && IsKeyPush(KEY_INPUT_LSHIFT))
+	{
+		//シーンフラグをリザルトシーンに変更
+		m_SceneFlag = 0;
+		//プレイ後処理へ移動
+		g_CurrentSceneID = SCENE_ID_FIN_PLAY;
+	}
+	//===============================================================
 }
 
 //描画処理
@@ -145,7 +161,10 @@ void PLAY::Draw()
 //後処理
 void PLAY::Fin()
 {
-	DeleteSoundMem(m_PlayBgmHndl);
+	for (int i = 0; i < PLAY_SOUND_PATH_NUM; i++)
+	{
+		DeleteSoundMem(m_PlayBgmHndl[i]);
+	}
 
 	//SceneFlagが0の時
 	if (m_SceneFlag == 0)
@@ -227,23 +246,41 @@ void PLAY::MapCollision(int mapmove)
 				//コイン処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
 				{
+					//エフェクト描画
 					effectInfo.PlayEffect(EFFECT_TYPE_SHINE, mapIndexX * MAP_SIZE -10
 						+ m_BG_move_x, mapIndexY * MAP_SIZE + 10);
+
+					ChangeVolumeSoundMem(150, m_PlayBgmHndl[1]);
+					PlaySoundMem(m_PlayBgmHndl[1], DX_PLAYTYPE_LOOP, true);	//コインSE
+					StopSoundMem(m_PlayBgmHndl[1], true);
+
 					m_map.CoinStep(mapIndexX, mapIndexY);
+
 					m_CoinNum += 1;
 					
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
 				{
+					ChangeVolumeSoundMem(130, m_PlayBgmHndl[2]);
+					PlaySoundMem(m_PlayBgmHndl[2], DX_PLAYTYPE_LOOP, true);	//コインSE
+					StopSoundMem(m_PlayBgmHndl[2], true);
+
 					TrapStep();
 				}
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
+					//エフェクト描画
 					effectInfo.PlayEffect(EFFECT_TYPE_RECOVERY, mapIndexX * MAP_SIZE - 10
 						+ m_BG_move_x, mapIndexY * MAP_SIZE + 10);
-					player.PlayerHeal();
+
+					ChangeVolumeSoundMem(200, m_PlayBgmHndl[3]);
+					PlaySoundMem(m_PlayBgmHndl[3], DX_PLAYTYPE_LOOP, true);	//回復SE
+					StopSoundMem(m_PlayBgmHndl[3], true);
+
+					player.PlayerHeal();	//プレイヤー回復処理
+
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
@@ -308,22 +345,40 @@ void PLAY::MapCollision(int mapmove)
 				//コイン処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 7)
 				{
-					m_map.CoinStep(mapIndexX, mapIndexY);
-					m_CoinNum += 1;
+					//エフェクト描画
 					effectInfo.PlayEffect(EFFECT_TYPE_SHINE, mapIndexX* MAP_SIZE - 10
 						+ m_BG_move_x, mapIndexY* MAP_SIZE + 10);
+
+					ChangeVolumeSoundMem(150, m_PlayBgmHndl[1]);
+					PlaySoundMem(m_PlayBgmHndl[1], DX_PLAYTYPE_LOOP, true);	//コインSE
+					StopSoundMem(m_PlayBgmHndl[1], true);
+
+					m_map.CoinStep(mapIndexX, mapIndexY);
+
+					m_CoinNum += 1;
 				}
 				//トラップ処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
 				{
+					ChangeVolumeSoundMem(130, m_PlayBgmHndl[2]);
+					PlaySoundMem(m_PlayBgmHndl[2], DX_PLAYTYPE_LOOP, true);	//コインSE
+					StopSoundMem(m_PlayBgmHndl[2], true);
+
 					TrapStep();
 				}
 				//ハート処理
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
 				{
+					//エフェクト描画
 					effectInfo.PlayEffect(EFFECT_TYPE_RECOVERY, mapIndexX* MAP_SIZE - 10
 						+ m_BG_move_x, mapIndexY* MAP_SIZE + 10);
-					player.PlayerHeal();
+
+					ChangeVolumeSoundMem(255, m_PlayBgmHndl[3]);
+					PlaySoundMem(m_PlayBgmHndl[3], DX_PLAYTYPE_LOOP, true);	//回復SE
+					StopSoundMem(m_PlayBgmHndl[3], true);
+
+					player.PlayerHeal();	//プレイヤー回復処理
+
 					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}

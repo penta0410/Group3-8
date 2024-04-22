@@ -9,7 +9,7 @@
 
 
 const char PLAYER_IMAGE_PATH[] = { "Data/Player/sample08.png" };			//画像パス
-
+const char PLAYER_JUMP_SE_PATH[] = {"Data/Sound/Play/jump04.mp3"};		//ジャンプSE
 const char PLAYER_RUN_SE[] = { "data/Player/SE/芝生の上を走る.mp3" };				//走っているときのSE
 const char PLAYER_JUMP_SE[] = { "" };				//ジャンプしているときのSE
 
@@ -124,6 +124,9 @@ private:
 
 	//プレイヤー無敵フレーム
 	int PlayerInviFlame;
+
+	//SEハンドル
+	int SEHandle;
 
 	//プレイヤーアニメーション種類
 	PlayerAnimationType now_animation;

@@ -13,7 +13,16 @@
 
 //プレイシーン画像枚数
 const int PLAY_IMAGE_PATH_NUM = 4;
-const char PLAY_BGM_PATH[] = { "Data/Sound/Play/PlayBGM.mp3" };			//プレイシーンのBGM
+const int PLAY_SOUND_PATH_NUM = 5;
+
+const char PLAY_BGM_PATH[PLAY_SOUND_PATH_NUM][256] =
+{
+	"Data/Sound/Play/PlayBGM.mp3",		//プレイシーンのBGM
+	"Data/Sound/Play/coin04.mp3",		//コイン獲得SE
+	"Data/Sound/Play/damaged1.mp3",		//ダメージSE
+	"Data/Sound/Play/recovery.mp3",		//回復SE
+
+};
 
 //プレイシーンパス
 const char PLAY_PATH[PLAY_IMAGE_PATH_NUM][256] =
@@ -63,7 +72,8 @@ private:
 	int m_numberHandle[10];
 	int num;
 
-	int m_PlayBgmHndl;
+	//サウンドハンドル
+	int m_PlayBgmHndl[5];
 
 public:
 

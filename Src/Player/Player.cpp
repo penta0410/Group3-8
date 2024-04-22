@@ -45,6 +45,9 @@ void Player::Init()
 	//重力フラグ
 	isGravity = false;
 
+	//SEハンドル
+	SEHandle = 0;
+
 }
 
 //読み込み処理
@@ -54,7 +57,8 @@ void Player::Load()
 	LoadDivGraph(PLAYER_IMAGE_PATH, PLAYER_IMG_TOTAL_NUM, PLAYER_IMG_X_NUM, PLAYER_IMG_Y_NUM, PLAYER_WIDTH, PLAYER_HEIGHT, m_ImageHandle);
 
 	//SE
-	m_PlayerDashSE = LoadSoundMem(PLAYER_RUN_SE);
+	m_PlayerDashSE = LoadSoundMem(PLAYER_RUN_SE);		//ダッシュ
+	SEHandle = LoadSoundMem(PLAYER_JUMP_SE_PATH);		//ジャンプ
 
 }
 
@@ -141,6 +145,10 @@ void Player::Fin()
 	for (int i = 0; i < PLAYER_IMAGE_NUM; i++) {
 		DeleteGraph(m_ImageHandle[i]);
 	}
+
+	DeleteSoundMem(m_PlayerDashSE);
+	DeleteSoundMem(SEHandle);
+
 }
 
 void Player::Move()
@@ -168,6 +176,10 @@ void Player::Control()
 			m_move_y -= PLAYER_Y_SPEED;
 
 			m_JumpCnt++;
+			
+			ChangeVolumeSoundMem(150, SEHandle);
+			PlaySoundMem(SEHandle, DX_PLAYTYPE_LOOP, true);	//コインSE
+			StopSoundMem(SEHandle, true);
 			
 			if (m_JumpCnt >= 2) {
 				//ジャンプ状態に設定
