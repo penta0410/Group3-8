@@ -213,6 +213,9 @@ public:
 
 	//プレイヤー死亡したかどうか
 	bool DeathPlayer();
+
+	//プレイヤー回復処理
+	void PlayerHeal();
 };
 
 

@@ -183,25 +183,28 @@ void PLAY::MapCollision(int mapmove)
 				{
 					if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
 					{
-						// ã•ûŒü‚ÌC³
-						if (dirArray[0]) {
-							// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
-							int overlap = By + Bh - Ay;
-							player.SetNextPosY(Ay + overlap);
+						if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 9)
+						{
+							// ã•ûŒü‚ÌC³
+							if (dirArray[0]) {
+								// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
+								int overlap = By + Bh - Ay;
+								player.SetNextPosY(Ay + overlap);
 
-							//“Vˆä‚É‚Â‚¢‚½‚ç‰Ÿ‚µ•Ô‚·
-							player.PlayerCeiling();
+								//“Vˆä‚É‚Â‚¢‚½‚ç‰Ÿ‚µ•Ô‚·
+								player.PlayerCeiling();
 
-						}
-						//‰º•ûŒü‚ÌC³
-						if (dirArray[1]) {
-							// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
-							int overlap = Ay + Ah - By;
-							player.SetNextPosY(Ay - overlap);
+							}
+							//‰º•ûŒü‚ÌC³
+							if (dirArray[1]) {
+								// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
+								int overlap = Ay + Ah - By;
+								player.SetNextPosY(Ay - overlap);
 
-							//—‰º‚µ‚½‚ç
-							player.PlayerLanding();
+								//—‰º‚µ‚½‚ç
+								player.PlayerLanding();
 
+							}
 						}
 					}
 				}
@@ -217,6 +220,13 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
 				{
 					TrapStep();
+				}
+				//ƒn[ƒgˆ—
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
+				{
+					player.PlayerHeal();
+
+					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
 		}
@@ -258,18 +268,21 @@ void PLAY::MapCollision(int mapmove)
 				{
 					if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 8)
 					{
-						// ¶•ûŒü‚ÌC³
-						if (dirArray[2]) {
-							// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
-							int overlap = Bx + Bw - Ax;
-							player.SetNextPosX(Ax + overlap);
-						}
+						if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] != 9)
+						{
+							// ¶•ûŒü‚ÌC³
+							if (dirArray[2]) {
+								// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
+								int overlap = Bx + Bw - Ax;
+								player.SetNextPosX(Ax + overlap);
+							}
 
-						// ‰E•ûŒü‚ÌC³
-						if (dirArray[3]) {
-							// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
-							int overlap = Ax + Aw - Bx;
-							player.SetNextPosX(Ax - overlap);
+							// ‰E•ûŒü‚ÌC³
+							if (dirArray[3]) {
+								// ‚ß‚è‚İ—Ê‚ğŒvZ‚·‚é
+								int overlap = Ax + Aw - Bx;
+								player.SetNextPosX(Ax - overlap);
+							}
 						}
 					}
 				}
@@ -284,6 +297,13 @@ void PLAY::MapCollision(int mapmove)
 				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 8)
 				{
 					TrapStep();
+				}
+				//ƒn[ƒgˆ—
+				if (m_map.m_FileReadMapData[mapIndexY][mapIndexX] == 9)
+				{
+					player.PlayerHeal();
+
+					m_map.HeartStep(mapIndexX, mapIndexY);
 				}
 			}
 		}

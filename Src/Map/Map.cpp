@@ -17,6 +17,7 @@ void Map::Init() {
 	imgHundle[MAPCHIP_HAKO] = LoadGraph("Data/Play/図51.png");	//木箱
 	imgHundle[MAPCHIP_COIN] = LoadGraph("Data/Play/coin.png");	//コイン
 	imgHundle[MAPCHIP_TRAP] = LoadGraph("Data/Play/Trap.png");	//トラップ
+	imgHundle[MAPCHIP_HEART] = LoadGraph("Data/Play/heart.png");	//ハート
 
 	ReadFile();
 	isReadFile = true;
@@ -49,17 +50,27 @@ void Map::Draw(int mapmove) {
 					move = x * MAP_SIZE - mapmove;
 					if (m_FileReadMapData[y][x] != 7)
 					{
-						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+						if (m_FileReadMapData[y][x] != 9)
+						{
+							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+						}
 					}
 
+					//コイン
 					for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
 					{
-						if (CoinFlag[coin_num] == 1)
+						if (m_FileReadMapData[y][x] == 7)
 						{
-							if (m_FileReadMapData[y][x] == 7)
-							{
-								DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-							}
+							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
+						}
+					}
+
+					//ハート
+					for (int heart_num = 0; heart_num < COIN_NUM; heart_num++)
+					{
+						if (m_FileReadMapData[y][x] == 9)
+						{
+							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 						}
 					}
 				}
@@ -83,7 +94,14 @@ void Map::CoinStep(int x, int y)
 	}
 }
 
-
+//ハート通常処理
+void Map::HeartStep(int x, int y)
+{
+	if (m_FileReadMapData[y][x] == 9)
+	{
+		m_FileReadMapData[y][x] = -1;
+	}
+}
 
 // ファイルからの読み込み
 void Map::ReadFile() {

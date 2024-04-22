@@ -28,6 +28,7 @@ enum MapChipType {
 	MAPCHIP_HAKO,
 	MAPCHIP_COIN,
 	MAPCHIP_TRAP,
+	MAPCHIP_HEART,
 
 	MAPCHIP_MAX
 };
@@ -87,6 +88,8 @@ public:
 	//コイン通常処理
 	void CoinStep(int x, int y);
 
+	//ハート通常処理
+	void HeartStep(int x, int y);
 	
 };
 

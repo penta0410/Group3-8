@@ -412,3 +412,9 @@ bool Player::DeathPlayer()
 		return true;
 	}
 }
+
+//ƒvƒŒƒCƒ„[‰ñ•œˆ—
+void Player::PlayerHeal()
+{
+	m_HP += 10;
+}
