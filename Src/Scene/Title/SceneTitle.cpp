@@ -4,6 +4,7 @@
 #include "../../Input/Input.h"
 #include "../../Transparent/Transparent.h"
 #include "../../Collision/Collision.h"
+#include "../../Transparent/Transparent.h"
 
 //画像読み込み
 #define TITEL_BACK_PATH	"Data/Title/BackGround.png"
@@ -31,7 +32,10 @@ void TITLE::Init()
 
 	//エンターの点滅用の変数の初期化
 	m_blink = 0;
-	m_blinkflag = 0;
+	
+	//プレイヤー初期化
+	c_player.Init();
+	c_player.DefaultValue();
 
 	//タイトルループへ
 	g_CurrentSceneID = SCENE_ID_LOOP_TITLE;
@@ -45,6 +49,9 @@ void TITLE::Load()
 	m_GroundHndl = LoadGraph(TITEL_GROUND_PATH);
 	m_TitleHndl = LoadGraph(TITLE_PATH);
 	m_EnterHndl = LoadGraph(TITLE_ENTER_PATH);
+
+	//プレイヤーロード
+	c_player.Load();
 }
 
 void TITLE::Sound()
@@ -55,7 +62,7 @@ void TITLE::Sound()
 //通常処理
 void TITLE::Step()
 {
-
+	
 	//地面のスクロール
 	m_GroundPosX -= 4;
 	m_GroundMaxPosX -= 4;
@@ -66,22 +73,9 @@ void TITLE::Step()
 		m_GroundMaxPosX = 1280;
 	}
 
-	//エンターの点滅処理
-	switch (m_blinkflag)
-	{
-	case0:
-		m_blink += 9;
-		if (m_blink >= 255) {
-			m_blinkflag = 1;
-		}
-		break;
-	case1:
-		m_blink -= 9;
-		if (m_blink <= 100) {
-			m_blinkflag = 0;
-		}
-		break;
-	}
+	m_blink = Transparent(m_blink, 1);
+
+	c_player.Animation();
 
 	//メインメニューシーンへの遷移
 	//Enterキー押されたなら
@@ -99,18 +93,17 @@ void TITLE::Step()
 void TITLE::Draw()
 {
 	DrawGraph(0, 0, m_BackHndl, true);
-	DrawGraph(m_GroundPosX, 600, m_GroundHndl, true);
-	DrawGraph(m_GroundMaxPosX, 600, m_GroundHndl, true);
+	DrawGraph(m_GroundPosX, 500, m_GroundHndl, true);
+	DrawGraph(m_GroundMaxPosX, 500, m_GroundHndl, true);
 	DrawGraph(300, 50, m_TitleHndl, true);
-	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_blink);
-	DrawGraph(300, 100, m_EnterHndl, true);
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
+	//点滅処理（エンター）
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_blink);
+	DrawGraph(370, 350, m_EnterHndl, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_blink);
 
-	//デバッグ
-	//SetFontSize(30);
-	//DrawFormatString(100, 100, GetColor(255, 255, 255), "タイトルシーンです。", true);
-	//DrawFormatString(100, 200, GetColor(255, 255, 255), "enterでメインメニューシーン", true);
-	//SetFontSize(16);
+	c_player.Draw();
+
 }
 
 //消去処理
@@ -118,6 +111,8 @@ void TITLE::Fin()
 {
 	//削除
 	DeleteSoundMem(m_BGMHndl);
+
+	c_player.Fin();
 
 	//SceneFlagが0の時
 	if (m_SceneFlag == 0)

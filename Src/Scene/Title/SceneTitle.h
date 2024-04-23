@@ -1,5 +1,6 @@
 #pragma once
 #include "../Scene.h"
+#include "../../Player/Player.h"
 
 const char TITLE_BGM[] = { "Data/Sound/Title/ks011.wav" };		//タイトル画面のBGM
 
@@ -19,8 +20,10 @@ private:
 
 	//エンターの点滅用の変数
 	int m_blink;
-	int m_blinkflag;
+	
+
 public:
+	Player c_player;
 
 	//初期化
 	void Init() override;
