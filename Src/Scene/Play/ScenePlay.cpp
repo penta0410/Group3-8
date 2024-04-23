@@ -72,7 +72,7 @@ void PLAY::Step()
 	//プレイヤーが生きている時だけ処理を行う死んだらストップ
 	if (player.DeathPlayer() == false)
 	{
-		player.Step();				//プレイヤーの通常処理
+		player.Step(1);				//プレイヤーの通常処理
 		effectInfo.StepEffect();		//エフェクト通常処理
 
 		//背景スクロール処理
@@ -132,7 +132,7 @@ void PLAY::Draw()
 
 	m_map.Draw(-m_BG_move_x);	//マップ描画
 
-	player.Draw();				//プレイヤーの描画処理
+	player.Draw(1);				//プレイヤーの描画処理
 
 	effectInfo.DrawEffect();
 

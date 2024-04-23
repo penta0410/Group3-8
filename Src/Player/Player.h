@@ -148,10 +148,10 @@ public:
 	void DefaultValue();
 
 	//’Êíˆ—
-	void Step();
+	void Step(int flag);
 
 	//•`‰æˆ—
-	void Draw();
+	void Draw(int flag);
 
 	//I—¹ˆ—
 	void Fin();

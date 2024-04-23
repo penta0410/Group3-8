@@ -102,52 +102,65 @@ void Player::DefaultValue()
 }
 
 //通常処理
-void Player::Step()
+void Player::Step(int flag)
 {
-	//移動前の座標を記録する
-	old_pos_x = m_posX;
-	old_pos_y = m_posY;
-
-	//移動処理	
-	//Move();				
-
-	//操作処理
-	Control();
-
-	//アニメーション処理
-	Animation();		
-
-	Gravity();			//重力与える
-
-	StepInvincible();
-
-	//空中にいなければ状態をリセット
-	if (!IsAirPlayer())
+	if (flag == 1)
 	{
-		state = PLAYER_STATE_RUN;
+		//移動前の座標を記録する
+		old_pos_x = m_posX;
+		old_pos_y = m_posY;
+
+		//移動処理	
+		//Move();				
+
+		//操作処理
+		Control();
+
+		Gravity();			//重力与える
+
+		StepInvincible();
+
+		//空中にいなければ状態をリセット
+		if (!IsAirPlayer())
+		{
+			state = PLAYER_STATE_RUN;
+		}
+
+		//落下前更新
+		StepPlayerMidAir();
+
+		//落下更新
+		StepPlayerFall();
 	}
-
-	//落下前更新
-	StepPlayerMidAir();
-
-	//落下更新
-	StepPlayerFall();
-
+	
+	//アニメーション処理
+	Animation();
+	
 }
 
 //描画処理
-void Player::Draw()
+void Player::Draw(int flag)
 {
 	////デバッグ
 	//DrawFormatString(32, 32, GetColor(255, 0, 0), "%f, %f", m_posX, m_posY);
 
-	//プレイヤー画像
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
-	DrawRotaGraph(m_posX + PLAYER_W_R, m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_alpha);
+	if (flag == 1)
+	{
+		//プレイヤー画像
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
+		DrawRotaGraph(m_posX + PLAYER_W_R, m_posY + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_alpha);
 
-	//プレイヤーｈｐ描画
-	DrawHp();
+
+		//プレイヤーｈｐ描画
+		DrawHp();
+	}
+
+	if (flag == 0)
+	{
+		DrawRotaGraph(150 + PLAYER_W_R, 440   + PLAYER_H_R, 3.0f, 0.0f, m_ImageHandle[m_Animation_Num], true, false);
+	}
+
 }
 
 //終了処理

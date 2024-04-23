@@ -75,7 +75,7 @@ void TITLE::Step()
 
 	m_blink = Transparent(m_blink, 1);
 
-	c_player.Animation();
+	c_player.Step(0);
 
 	//メインメニューシーンへの遷移
 	//Enterキー押されたなら
@@ -102,7 +102,7 @@ void TITLE::Draw()
 	DrawGraph(370, 350, m_EnterHndl, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, m_blink);
 
-	c_player.Draw();
+	c_player.Draw(0);
 
 }
 
