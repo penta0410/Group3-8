@@ -23,6 +23,8 @@ void PLAY::Init()
 	//背景移動量
 	m_BG_move_x = 0;
 
+	flamecount = 0;
+
 	for (int i = 0; i < PLAY_SOUND_PATH_NUM; i++)
 	{
 		m_PlayBgmHndl[i] = -1;
@@ -67,36 +69,45 @@ void PLAY::Sound()
 //通常処理
 void PLAY::Step()
 {	
-	player.Step();				//プレイヤーの通常処理
-	effectInfo.StepEffect();		//エフェクト通常処理
-
-	//背景スクロール処理
-	m_BG_x[0] -= PLAYER_SPEED;
-	m_BG_x[1] -= PLAYER_SPEED;
-	m_BG_move_x -= PLAYER_SPEED;
-
-	if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
+	//プレイヤーが生きている時だけ処理を行う死んだらストップ
+	if (player.DeathPlayer() == false)
 	{
-		m_BG_x[0] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
-	}
-	else if (m_BG_x[1] <= -(WINDOW_WIDTH / 2))
-	{
-		m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
-	}
+		player.Step();				//プレイヤーの通常処理
+		effectInfo.StepEffect();		//エフェクト通常処理
 
-	//マップの当たり判定
-	MapCollision(-m_BG_move_x);
+		//背景スクロール処理
+		m_BG_x[0] -= PLAYER_SPEED;
+		m_BG_x[1] -= PLAYER_SPEED;
+		m_BG_move_x -= PLAYER_SPEED;
 
-	//プレイヤーの座標を更新
-	player.UpdatePos();
+		if (m_BG_x[0] <= -(WINDOW_WIDTH / 2))
+		{
+			m_BG_x[0] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
+		}
+		else if (m_BG_x[1] <= -(WINDOW_WIDTH / 2))
+		{
+			m_BG_x[1] = WINDOW_WIDTH + (WINDOW_WIDTH / 2);
+		}
+
+		//マップの当たり判定
+		MapCollision(-m_BG_move_x);
+
+		//プレイヤーの座標を更新
+		player.UpdatePos();
+	}
 
 	//プレイヤーが死亡したら
 	if (player.DeathPlayer() == true)
 	{
-		//シーンフラグをリザルトシーンに変更
-		m_SceneFlag = 0;
-		//プレイ後処理へ移動
-		g_CurrentSceneID = SCENE_ID_FIN_PLAY;
+		flamecount++;
+
+		if (flamecount > 60)
+		{
+			//シーンフラグをリザルトシーンに変更
+			m_SceneFlag = 0;
+			//プレイ後処理へ移動
+			g_CurrentSceneID = SCENE_ID_FIN_PLAY;
+		}
 	}
 
 	//デバッグ(死亡できなかった時のため)=============================

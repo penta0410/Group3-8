@@ -75,6 +75,8 @@ private:
 	//サウンドハンドル
 	int m_PlayBgmHndl[5];
 
+	int flamecount;
+
 public:
 
 	//初期化

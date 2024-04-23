@@ -57,14 +57,11 @@ void Map::Draw(int mapmove) {
 					}
 
 					//コイン
-					for (int coin_num = 0; coin_num < COIN_NUM; coin_num++)
+					if (m_FileReadMapData[y][x] == 7)
 					{
-						if (m_FileReadMapData[y][x] == 7)
-						{
-							DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
-						}
+						DrawGraph(move, y * MAP_SIZE, imgHundle[mapchipType], true);
 					}
-
+					
 					//ハート
 					for (int heart_num = 0; heart_num < COIN_NUM; heart_num++)
 					{

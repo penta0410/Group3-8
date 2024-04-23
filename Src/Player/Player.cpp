@@ -427,11 +427,11 @@ void Player::DrawHp()
 //プレイヤー死亡処理
 bool Player::DeathPlayer()
 {
-	if (m_HP > 0)
+	if (m_HP > -20)
 	{
 		return false;
 	}
-	else if (m_HP <= 0)
+	else if (m_HP <= -20)
 	{
 		return true;
 	}
@@ -449,15 +449,15 @@ void Player::TrapStep()
 	//プレイヤーが無敵状態じゃなかったら
 	if (PlayerInvincible() == false)
 	{
-		if (m_HP > 0)
+		if (m_HP > -20)
 		{
 			//トラップ当たったらｈｐ現象
 			m_HP = m_HP - TRAP_DAMAGE;
 			
 		}
-		else if (m_HP <= 0)
+		else if (m_HP <= -20)
 		{
-			m_HP = 0;
+			m_HP = -20;
 		}
 	}
 }
