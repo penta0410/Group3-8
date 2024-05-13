@@ -43,7 +43,8 @@ void RESULT::Load()
 	ImageHandle = LoadGraph(RESULT_PATH);
 	MojiHandle = LoadGraph(RESULT_MOJI_PATH);
 	for (int i = 0; i < 10; i++) {
-		LoadDivGraph(RESULT_NUMBER_PATH, SCORE_NUMBER_MAX_NUM, SCORE_NUMBER_MAX_NUM, 1, 12, 24, m_numberHandle, false);
+		LoadDivGraph(RESULT_NUMBER_PATH, SCORE_NUMBER_MAX_NUM,
+			SCORE_NUMBER_MAX_NUM, 1, 12, 24, m_numberHandle, false);
 	}
 
 	m_BgmHndl = LoadSoundMem(RESULT_BGM_PATH);
